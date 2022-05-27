@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "523744039059",
+    "project_id": "demologingg-aa419",
+    "storage_bucket": "demologingg-aa419.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523744039059:android:9c9e887c7eecc0db9e3d66",
+        "android_client_info": {
+          "package_name": "com.demologingg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523744039059-lastqud4oddvrudqatclv27o0hdg6kun.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.demologingg",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNDNN-Mt1V5SfUWqLNFdDxdeyBFhy3z9o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
