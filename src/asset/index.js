@@ -1,3 +1,3 @@
 import img from "./img";
-
-export {img}
+import icon from "./icon"
+export {img,icon}

@@ -17,19 +17,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { log, Value, set } from 'react-native-reanimated';
 import Google from './Google';
 import  {img} from "../../asset"
+import { useNavigation, useRoute } from '@react-navigation/native';
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
 });
 // Settings.setAppID('APP ID');
-export default function Login({navigation}) {
+
+
+
+
+ const  Login =()=> {
   const [user,setUser]=useState('')
   const [info,setInfo]=useState(null)
+
+  const navigation = useNavigation();
+
 
 
 useEffect(()=>{
   if(info){
-    LoginFb(info)
+    LoginFb()
   }
 },[info])
 
@@ -73,10 +81,10 @@ useEffect(()=>{
   };
   return (
     <ImageBackground source={img.imgLogin}  style={{flex:1,justifyContent:"center"}}>
-    <View style={styles.taikhoan}>
+    <View style={styles.taiKhoan}>
           <TextInput placeholder='UserName' />
     </View>
-    <View style={styles.matkhau}>
+    <View style={styles.matKhau}>
           <TextInput placeholder='PassWord' />
     </View>
     <View>
@@ -100,7 +108,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:"center",
   },
-  taikhoan: {
+  taiKhoan: {
     borderWidth: 2.5,
     borderColor:"white",
     backgroundColor:"white",
@@ -108,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom:10,
     borderRadius:8
   },
-  matkhau: {
+  matKhau: {
     borderWidth: 2.5,
     borderColor:"white",
     backgroundColor:"white",
@@ -124,3 +132,4 @@ const styles = StyleSheet.create({
     alignItems:"center",
   }
 });
+export default Login
