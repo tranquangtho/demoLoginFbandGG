@@ -17,14 +17,13 @@ import auth from '@react-native-firebase/auth';
 import {img, icon} from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
 import {useNavigation} from '@react-navigation/native';
-import { Value } from 'react-native-reanimated';
+import { Value, log } from 'react-native-reanimated';
+import ModalComment from './ModalComment';
 const Google = () => {
   const navigation = useNavigation();
 
   const [info, setInfo] = useState('');
   const [post, setPost] = useState('');
-
-  console.log("abssss:",post);
   useEffect(() => {
 
     getDataG();
@@ -49,25 +48,21 @@ const Google = () => {
       console.log(error);
     }
   };
-  //dataPost
-  // const getDataPost = async () => {
-  //   try {
-  //   // const newPost=await AsyncStorage.getItem('@Post');
-  //   const newPosts=JSON.parse(post)
-  //   setPost(newPosts)
-  //   console.log("abs",newPosts);  
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(()=>{
-  // },[info])
-  // //thich bai viet
-  const [count, setCount] = useState(0);
 
-  const onLike = async () => {
-    setCount(count + 1);
-  };
+
+ 
+  const [count, setCount] = useState(0);
+  const [like,setLike]=useState(false)
+  // const onLike=(id)=>{
+  //   setLike(()=>{
+  //     return like.map((post)=>{
+  //       if(post.id==id)
+  //       return {...post,isLike: !post.isLike}
+  //       return post
+  //     })
+  //   })
+  // }
+
   const renderItem = (item) => {
     return (
       <View style={styles.posts}>
@@ -84,15 +79,23 @@ const Google = () => {
           <Image source={icon.cancel} style={styles.cancel} />
         </TouchableOpacity>
       </View>
+      <View>
+        <Text>{item.item.text}</Text>
+      </View>
       <View style={{flexDirection: 'row'}}>
+      { !item.item.isLike==false
+      ?
+        <TouchableOpacity onPress={onLike}>
+          <Image source={icon.like} style={styles.dislike} />
+        </TouchableOpacity>
+        :
         <TouchableOpacity onPress={onLike}>
           <Image source={icon.like} style={styles.like} />
         </TouchableOpacity>
+      }
+        
         <Text style={{fontSize: 50}}>{count}</Text>
-      </View>
-
-      <View>
-        <Text>{item.post}</Text>
+       {/* <ModalComment /> */}
       </View>
     </View>
     );
@@ -112,6 +115,11 @@ const Google = () => {
   );
 };
 const styles = StyleSheet.create({
+  dislike:{
+    backgroundColor:"blue",
+    height: 50,
+    width: 50,
+  },
   like: {
     height: 50,
     width: 50,

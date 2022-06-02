@@ -25,7 +25,8 @@ const ModalFaceBook = props => {
     const newItem = {
       id:  Date.now(),
       time: Date.now(),
-      text
+      text,
+      isLike:false
     }
     let newPost = [...post]
     newPost.push(newItem)
@@ -34,15 +35,17 @@ const ModalFaceBook = props => {
   };
 
   useEffect(()=>{
-     AsyncStorage.setItem("@Post",post)
-  
+     AsyncStorage.setItem("@Post",JSON.stringify(post))
+    //  if(onPost){
+    //    setPost(JSON.parse(post))
+    //  }
   },[post])
 
 
 
   return (
     <View style={styles.modal}>
-      <Modal animationType="slide" transparent={false} visible={modalVisible}>
+      <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false} onRequestClose>
         <View>
           <View style={{flexDirection: 'row', margin: 10}}>
             <Image source={img.imgLogin} style={styles.avatar} />
