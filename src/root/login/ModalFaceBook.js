@@ -26,7 +26,7 @@ const ModalFaceBook = props => {
       id:  Date.now(),
       time: Date.now(),
       text,
-      isLike:false
+      Like:false,
     }
     let newPost = [...post]
     newPost.push(newItem)
@@ -36,9 +36,6 @@ const ModalFaceBook = props => {
 
   useEffect(()=>{
      AsyncStorage.setItem("@Post",JSON.stringify(post))
-    //  if(onPost){
-    //    setPost(JSON.parse(post))
-    //  }
   },[post])
 
 
@@ -47,7 +44,7 @@ const ModalFaceBook = props => {
     <View style={styles.modal}>
       <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false} onRequestClose>
         <View>
-          <View style={{flexDirection: 'row', margin: 10}}>
+          <View style={{flexDirection: 'row', marginTop:10}}>
             <Image source={img.imgLogin} style={styles.avatar} />
             <Text style={{color: 'black', fontSize: 20}}>{name}</Text>
           </View>
@@ -75,15 +72,19 @@ const ModalFaceBook = props => {
           </View>
         </View>
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
-        <Text>bạn đang nghĩ gì</Text>
+      <View style={{flexDirection:"row",height:50,alignItems:"center",paddingLeft:10,backgroundColor:"white"}}>
+            <Image source={img.imgLogin} style={{height:35,width:35,marginRight:20,borderRadius:50}}/>
+      <Pressable onPress={() => setModalVisible(true)} style={{borderWidth:1,width:"70%",height:35,borderRadius:30,justifyContent:"center"}} >
+        <Text style={{marginLeft:20}}>bạn đang nghĩ gì</Text>
       </Pressable>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   modal: {
-    borderWidth: 1,
+    borderWidth: 0.5,
+    marginTop:10
   },
   avatar: {
     height: 50,

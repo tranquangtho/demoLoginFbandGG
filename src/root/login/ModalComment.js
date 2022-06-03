@@ -1,30 +1,73 @@
-import { View, Text, Modal,StyleSheet, Image,Pressable } from 'react-native'
-import React, { useState } from 'react'
+import { View, Text, Modal,StyleSheet, Image,Pressable, FlatList, TextInput, TouchableOpacity } from 'react-native'
+import React, { useState,useEffect } from 'react'
 import { icon,img } from '../../asset';
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 const ModalComment=(props)=> {
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [comment,setComment]=useState('')
+  const [textA,setTextA]=useState()
+  const onChangeText = val=>{
+    setTextA(val)
+  }
+  const onSend= ()=>{
+      const newItem = {
+        id:  Date.now(),
+        time: Date.now(),
+        Like:false,
+        textA,
+        count,
+      }
+      let newSend = [...comment]
+      newSend.push(newItem)
+      setComment(newSend)
+    };
+    const modalView=()=>{
+      setModalVisible(!modalVisible)
+    }
+
+    // useEffect(()=>{
+    //   AsyncStorage.setItem("@Post",JSON.stringify(comment))
+    // },[comment])
+  console.log("listComment",comment); 
+
   return (
     <View>
       <Modal animationType="slide" transparent={false} visible={modalVisible}  style={styles.modal}>
-        <View>
-          <View style={{flexDirection: 'row', margin: 10}}>
-            <Image source={img.imgLogin} style={styles.avatar} />
-            <Text style={{color: 'black', fontSize: 20}}>{props.name}</Text>
-          </View>
-          <Pressable style={{backgroundColor: '#f9ffb1'}}>
-
-                <Text>hello</Text>
-          </Pressable>
+      <TouchableOpacity onPress={modalView}><Text>aaa</Text></TouchableOpacity>
+        <View style={{borderWidth:1,margin:10,flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
+        <TextInput placeholder='nhap noi dung' style={{marginLeft:10}}  blurOnSubmit={true} onChangeText={onChangeText}/>
+        <TouchableOpacity onPress={onSend}>
+        <Image source={icon.cancel} style={{height:20,width:20,marginRight:10}}/>
+        </TouchableOpacity>
         </View>
+        <FlatList data={comment}
+          keyExtractor={item=>item.id}
+          renderItem={(item)=>{
+            console.log("item",item)
+            return (
+              <View style={{backgroundColor:"#f2edd3",margin:10}}>
+                <View style={{flexDirection:'row'}}>
+                  <Image source={img.imgLogin} style={{height:50,width:50,borderRadius:50}}/>
+                  <Text style={{}}>{props.name}</Text>
+                </View>
+                <Text>{item.item.textA}</Text>
+              </View>
+            )
+          }}
+        />
       </Modal>
-      <Pressable onPress={() => setModalVisible(true)}>
-       <Image source={icon.comment} style={{height:50,width:50}}/>
+      <Pressable onPress={() => setModalVisible(true)} style={{flexDirection:'row',alignItems:"center"}}>
+       <Image source={icon.comment} style={{height:20,width:20,marginRight:5}}/>
+       <Text  style={{fontSize:16}}>Bình luận</Text>
       </Pressable>
     </View>
   )
 }
 const styles = StyleSheet.create({
-    modal:{paddingTop:10},
+    modal:
+    {marginTop:100
+    },
     avatar: {
       height: 50,
       width: 50,

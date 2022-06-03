@@ -9,6 +9,7 @@ import {
   Modal,
   Pressable,
   FlatList,
+  ImageBackground
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -25,17 +26,16 @@ const Google = () => {
   const [info, setInfo] = useState('');
   const [post, setPost] = useState('');
   useEffect(() => {
-
     getDataG();
   }, [info]);
-  const removeData = async () => {
-    try {
-        await AsyncStorage.clear();
-        navigation.navigate('Login');
-    } catch (error) {
-        console.log(error);
-    }
-  }
+  // const removeData = async () => {
+  //   try {
+  //       await AsyncStorage.clear();
+  //       navigation.navigate('Login');
+  //   } catch (error) {
+  //       console.log(error);
+  //   }
+  // }
 
   const getDataG = async () => {
     try {
@@ -62,8 +62,19 @@ const Google = () => {
   //     })
   //   })
   // }
+  const onLike=()=>{
+    if(like==true){
+    setLike(!like)
+    setCount(count-1)
+    }
+    else{
+      setLike(!like)
+      setCount(count+1)
+    }
+  }
 
   const renderItem = (item) => {
+    console.log("item.like :",item);
     return (
       <View style={styles.posts}>
       <View style={styles.info}>
@@ -79,50 +90,57 @@ const Google = () => {
           <Image source={icon.cancel} style={styles.cancel} />
         </TouchableOpacity>
       </View>
-      <View>
-        <Text>{item.item.text}</Text>
+      <View style={{margin:10}}>
+        <Text style={{fontSize:16,color:"black"}}>{item.item.text}</Text>
       </View>
-      <View style={{flexDirection: 'row'}}>
-      { !item.item.isLike==false
+      <View style={{margin:10}}>
+        <Text>{count}</Text>
+      </View>
+      <View style={{flexDirection: 'row',alignItems:"center",justifyContent:"space-around",borderTopWidth:0.4,padding:10}}>
+      {like==true
+
       ?
-        <TouchableOpacity onPress={onLike}>
+        <TouchableOpacity style={{flexDirection:"row",alignItems:"center"}} onPress={onLike}>
           <Image source={icon.like} style={styles.dislike} />
+          <Text style={{fontSize:16}}>Bỏ thích</Text>
         </TouchableOpacity>
         :
-        <TouchableOpacity onPress={onLike}>
+        <TouchableOpacity style={{flexDirection:"row",alignItems:"center",justifyContent:"center"}} onPress={onLike}>
           <Image source={icon.like} style={styles.like} />
+          <Text  style={{fontSize:16}}>Thích</Text>
         </TouchableOpacity>
       }
-        
-        <Text style={{fontSize: 50}}>{count}</Text>
-       {/* <ModalComment /> */}
+       <ModalComment name={info} />
+      <View style={{flexDirection:"row"}}>
+      <Image source={icon.cancel} style={{height:20,width:20,marginRight:5}}/>
+      <Text  style={{fontSize:18}}>Chia Sẻ</Text>
+      </View>
       </View>
     </View>
     );
   };
   return (
-    <View>
-      <ModalFaceBook name={info} setPost={setPost} post={post}/>
-      <TouchableOpacity onPress={removeData}><Text>hello</Text></TouchableOpacity>
-      <View>
+    <View style={{backgroundColor:"#bec2b8",height:"100%"}}>
+      <ModalFaceBook name={info} setPost={setPost} post={post} />
+      {/* <TouchableOpacity onPress={removeData}><Text>hello</Text></TouchableOpacity> */}
           <FlatList
           data={post}
             keyExtractor={item => item.id}
             renderItem={renderItem}
           />
-      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   dislike:{
     backgroundColor:"blue",
-    height: 50,
-    width: 50,
+    height: 30,
+    width: 30,
   },
   like: {
-    height: 50,
-    width: 50,
+    height: 30,
+    width: 30,
+    marginRight:5
   },
   creatPost: {
     margin: 10,
@@ -136,16 +154,20 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    margin:10
   },
   imgAvatar: {
     height: 50,
     width: 50,
+    borderRadius:50,
+    marginRight:10
   },
   posts: {
-    height: 200,
     margin: 10,
     borderRadius: 10,
     borderWidth: 2,
+    backgroundColor:"white",
+
   },
   centeredView: {
     flex: 1,

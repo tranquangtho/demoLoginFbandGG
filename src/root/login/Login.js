@@ -8,7 +8,8 @@ import {
   Text,
   TouchableOpacity,
   Alert,
-  ImageBackground
+  ImageBackground,
+  Image
 } from 'react-native';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -80,20 +81,23 @@ useEffect(()=>{
     )
   };
   return (
-    <ImageBackground source={img.imgLogin}  style={{flex:1,justifyContent:"center"}}>
+    <ImageBackground source={img.imgLogin2}  style={{flex:1,justifyContent:"center"}}>
     <View style={styles.taiKhoan}>
+            <Image source={img.user} style={{height:30,width:30}}/>
           <TextInput placeholder='UserName' />
     </View>
     <View style={styles.matKhau}>
+    <Image source={img.lock} style={{height:30,width:30}}/>
+
           <TextInput placeholder='PassWord' />
     </View>
     <View>
     
     <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
-        <Text>Google</Text>
+        <Image source={img.imageGoogle} style={{height:30,width:"100%"}}/>
       </TouchableOpacity>
       <TouchableOpacity onPress={LoginFb} style={styles.LoginFb}>
-        <Text>facebook</Text>
+        <Image source={img.imageFacebook} style={{height:30,width:"100%"}} resizeMode='cover'/>
       </TouchableOpacity>
     </View>
     </ImageBackground>
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
     backgroundColor:"white",
     justifyContent:"center",
     alignItems:"center",
+    marginBottom:10
   },
   taiKhoan: {
     borderWidth: 2.5,
@@ -114,7 +119,9 @@ const styles = StyleSheet.create({
     backgroundColor:"white",
     marginHorizontal:70,
     marginBottom:10,
-    borderRadius:8
+    borderRadius:8,
+    flexDirection:"row",
+    alignItems:"center"
   },
   matKhau: {
     borderWidth: 2.5,
@@ -123,6 +130,8 @@ const styles = StyleSheet.create({
     marginHorizontal:70,
     borderRadius:8,
     marginBottom:10,
+    flexDirection:"row",
+    alignItems:"center"
   },
   LoginFb:{
     height:30,
