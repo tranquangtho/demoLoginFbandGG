@@ -15,7 +15,6 @@ import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import {LoginButton, AccessToken, Profile,Settings,LoginManager} from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { log, Value, set } from 'react-native-reanimated';
 import Google from './Google';
 import  {img} from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -29,18 +28,14 @@ GoogleSignin.configure({
 
 
  const  Login =()=> {
-  const [user,setUser]=useState('')
-  const [info,setInfo]=useState(null)
-
+  // const [user,setUser]=useState('')
+  // const [info,setInfo]=useState(null)
+  const [ready,setReady]=useState(false)
   const navigation = useNavigation();
 
 
 
-useEffect(()=>{
-  if(info){
-    LoginFb()
-  }
-},[info])
+
 
   const onGoogleButtonPress = async () => {
     // Get the users ID token
@@ -71,15 +66,21 @@ useEffect(()=>{
             const value=JSON.stringify(data)
             await AsyncStorage.setItem("@UserName",value)
              navigation.navigate("Google")
-        }
+             console.log(value);
+            //  setReady(!ready)
+             }
         )
 
         }
+        // if(setReady == true){
+        //     return <Google />
+        // }
         },function (error) {
           console.log(error);
         }
     )
   };
+
   return (
     <ImageBackground source={img.imgLogin2}  style={{flex:1,justifyContent:"center"}}>
     <View style={styles.taiKhoan}>

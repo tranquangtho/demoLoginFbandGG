@@ -27,6 +27,7 @@ const ModalFaceBook = props => {
       time: Date.now(),
       text,
       Like:false,
+        
     }
     let newPost = [...post]
     newPost.push(newItem)
@@ -42,7 +43,7 @@ const ModalFaceBook = props => {
 
   return (
     <View style={styles.modal}>
-      <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false} onRequestClose>
+      <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false}>
         <View>
           <View style={{flexDirection: 'row', marginTop:10}}>
             <Image source={img.imgLogin} style={styles.avatar} />

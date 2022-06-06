@@ -26,10 +26,7 @@ const ModalComment=(props)=> {
       setModalVisible(!modalVisible)
     }
 
-    // useEffect(()=>{
-    //   AsyncStorage.setItem("@Post",JSON.stringify(comment))
-    // },[comment])
-  console.log("listComment",comment); 
+
 
   return (
     <View>
@@ -44,7 +41,6 @@ const ModalComment=(props)=> {
         <FlatList data={comment}
           keyExtractor={item=>item.id}
           renderItem={(item)=>{
-            console.log("item",item)
             return (
               <View style={{backgroundColor:"#f2edd3",margin:10}}>
                 <View style={{flexDirection:'row'}}>
