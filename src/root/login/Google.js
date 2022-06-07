@@ -20,9 +20,8 @@ import ModalFaceBook from './ModalFaceBook';
 import { useNavigation } from '@react-navigation/native';
 import { Value, log } from 'react-native-reanimated';
 import ModalComment from './ModalComment';
-const Google = () => {
+const Google = (props) => {
   const navigation = useNavigation();
-
   const [info, setInfo] = useState('');
   const [post, setPost] = useState([]);
   useEffect(() => {
@@ -52,32 +51,25 @@ const Google = () => {
 
 
 
-  const [count, setCount] = useState(0);
 
 
 
-  const ItemPost = ({ item, index }) => {
-    const [favorite, setFavorite] = useState(item.Like)
+  const ItemPost = ({ item, index}) => {
+  const [favorite,setFavorite]=useState(false)
+
     const [numberLike, setNumberLike] = useState(0)
-
+    console.log("item:",item);
     const onLike = () => {
       const indexOfItem = post.indexOf(item)
       if (favorite) {
         setNumberLike(favorite - 1)
-        console.log("post like:",post);
       }
       else {
         setNumberLike(favorite + 1)
-        console.log("post dislike:",post);
-        
       }
       setFavorite(!favorite)
-      console.log("postttt:",post);
-      setPost(post)
     }
-    useEffect(()=>{
-      setPost(post)
-    },[favorite])
+
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -125,11 +117,11 @@ const Google = () => {
 
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <ModalFaceBook name={info} setPost={setPost} post={post} />
+      <ModalFaceBook name={info} setPost={setPost} post={post} onPost={}  />
       <FlatList
         data={post}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => (<ItemPost item={item} index={index} />)}
+        renderItem={({ item, index }) => (<ItemPost item={item} index={index}  />)}
       />
     </View>
   );

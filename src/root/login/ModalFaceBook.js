@@ -16,10 +16,9 @@ import {useNavigation} from '@react-navigation/native';
 const ModalFaceBook = props => {
   const  {name, setPost, post} = props
    const navigation = useNavigation();
-
   const [modalVisible, setModalVisible] = useState(false);
+  const [favorite,setFavorite]=useState(false)
   const [text, setText] = useState();
-
   const onChangeText = val => setText(val);
 
   const onPost = async () => {
@@ -27,14 +26,15 @@ const ModalFaceBook = props => {
       id:  Date.now(),
       time: Date.now(),
       text,
-      Like:false,
+      favorite:favorite,
         
     }
     let newPost = [...post]
     newPost.push(newItem)
     setPost(newPost)
     setModalVisible(!modalVisible);
-    // AsyncStorage.setItem("@Post",JSON.stringify(post))
+    AsyncStorage.setItem("@Post",JSON.stringify(post))
+
   };
 
 
