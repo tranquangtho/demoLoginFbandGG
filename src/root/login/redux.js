@@ -4,7 +4,6 @@ import bossReducer from './bossReducer';
 
 const rootReducer = combineReducers({
     itemReducer,
-    bossReducer
 });
 
 export default rootReducer;

@@ -12,6 +12,7 @@ import React, {useState, useEffect} from 'react';
 import {img} from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+
 const ModalFaceBook = props => {
   const  {name, setPost, post} = props
    const navigation = useNavigation();
@@ -33,11 +34,8 @@ const ModalFaceBook = props => {
     newPost.push(newItem)
     setPost(newPost)
     setModalVisible(!modalVisible);
+    // AsyncStorage.setItem("@Post",JSON.stringify(post))
   };
-
-  useEffect(()=>{
-     AsyncStorage.setItem("@Post",JSON.stringify(post))
-  },[post])
 
 
 

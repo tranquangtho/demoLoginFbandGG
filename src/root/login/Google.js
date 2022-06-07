@@ -24,8 +24,7 @@ const Google = () => {
   const navigation = useNavigation();
 
   const [info, setInfo] = useState('');
-  const [post, setPost] = useState('');
-  console.log("post:",post);
+  const [post, setPost] = useState([]);
   useEffect(() => {
     getDataG();
   }, [info]);
@@ -54,7 +53,6 @@ const Google = () => {
 
 
   const [count, setCount] = useState(0);
-  const [like, setLike] = useState(false)
 
 
 
@@ -66,12 +64,20 @@ const Google = () => {
       const indexOfItem = post.indexOf(item)
       if (favorite) {
         setNumberLike(favorite - 1)
+        console.log("post like:",post);
       }
       else {
         setNumberLike(favorite + 1)
+        console.log("post dislike:",post);
+        
       }
       setFavorite(!favorite)
+      console.log("postttt:",post);
+      setPost(post)
     }
+    useEffect(()=>{
+      setPost(post)
+    },[favorite])
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -105,6 +111,7 @@ const Google = () => {
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>Thích</Text>
             </TouchableOpacity>
+            
           }
           <ModalComment name={info} />
           <View style={{ flexDirection: "row" }}>

@@ -16,7 +16,6 @@ const ModalComment=(props)=> {
         time: Date.now(),
         Like:false,
         textA,
-        count,
       }
       let newSend = [...comment]
       newSend.push(newItem)
