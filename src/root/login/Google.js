@@ -20,22 +20,23 @@ import ModalFaceBook from './ModalFaceBook';
 import { useNavigation } from '@react-navigation/native';
 import { Value, log } from 'react-native-reanimated';
 import ModalComment from './ModalComment';
+
+
+
 const Google = (props) => {
   const navigation = useNavigation();
   const [info, setInfo] = useState('');
   const [post, setPost] = useState([]);
   useEffect(() => {
     getDataG();
+    getDataPost()
   }, [info]);
-
-  // const removeData = async () => {
-  //   try {
-  //       await AsyncStorage.clear();
-  //       navigation.navigate('Login');
-  //   } catch (error) {
-  //       console.log(error);
-  //   }
-  // }
+  
+  const getDataPost=async()=>{
+   await AsyncStorage.getItem("@Post")
+    setPost(JSON.parse(post))
+    console.log("hhhh:",JSON.parse(post));
+  }
 
   const getDataG = async () => {
     try {
@@ -48,28 +49,21 @@ const Google = (props) => {
       console.log(error);
     }
   };
-
-
-
-
-
-
-  const ItemPost = ({ item, index}) => {
-  const [favorite,setFavorite]=useState(false)
-
+  const [favorite, setFavorite] = useState(false)
     const [numberLike, setNumberLike] = useState(0)
-    console.log("item:",item);
     const onLike = () => {
-      const indexOfItem = post.indexOf(item)
       if (favorite) {
         setNumberLike(favorite - 1)
+      setPost(post)
       }
       else {
         setNumberLike(favorite + 1)
+      setPost(post)
       }
       setFavorite(!favorite)
     }
-
+  const ItemPost = ({ item, index }) => {
+    // const indexOfItem = post.indexOf(item)
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -81,7 +75,7 @@ const Google = (props) => {
               <Text style={{ fontWeight: 'bold', color: 'black' }}>{info}</Text>
             </View>
           </View>
-          <TouchableOpacity >
+          <TouchableOpacity  >
             <Image source={icon.cancel} style={styles.cancel} />
           </TouchableOpacity>
         </View>
@@ -103,7 +97,7 @@ const Google = (props) => {
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>Thích</Text>
             </TouchableOpacity>
-            
+
           }
           <ModalComment name={info} />
           <View style={{ flexDirection: "row" }}>
@@ -117,7 +111,7 @@ const Google = (props) => {
 
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <ModalFaceBook name={info} setPost={setPost} post={post} onPost={}  />
+      <ModalFaceBook name={info} setPost={setPost} post={post} favorite={favorite} setFavorite={setFavorite}  />
       <FlatList
         data={post}
         keyExtractor={item => item.id}

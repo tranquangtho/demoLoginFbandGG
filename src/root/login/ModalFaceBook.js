@@ -14,30 +14,31 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 
 const ModalFaceBook = props => {
-  const  {name, setPost, post} = props
+  const  {name, setPost, post,favorite,setFavorite} = props
    const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [favorite,setFavorite]=useState(false)
   const [text, setText] = useState();
+  const [isIndex,setIsIndex]=useState(0)
+
   const onChangeText = val => setText(val);
+  const newItem = {
+    id:  Date.now(),
+    time: Date.now(),
+    text,
+    favorite
+  }
 
   const onPost = async () => {
-    const newItem = {
-      id:  Date.now(),
-      time: Date.now(),
-      text,
-      favorite:favorite,
-        
-    }
     let newPost = [...post]
     newPost.push(newItem)
-    setPost(newPost)
+    setPost(newPost) 
+    setIsIndex(isIndex+1)
+    // setFavorite(favorite)
     setModalVisible(!modalVisible);
     AsyncStorage.setItem("@Post",JSON.stringify(post))
 
   };
-
-
+ 
 
   return (
     <View style={styles.modal}>
