@@ -20,6 +20,7 @@ import ModalFaceBook from './ModalFaceBook';
 import { useNavigation } from '@react-navigation/native';
 import { Value, log } from 'react-native-reanimated';
 import ModalComment from './ModalComment';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -27,6 +28,7 @@ const Google = (props) => {
   const navigation = useNavigation();
   const [info, setInfo] = useState('');
   const [post, setPost] = useState([]);
+
   useEffect(() => {
     getDataG();
     // getDataPost()

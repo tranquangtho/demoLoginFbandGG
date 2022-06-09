@@ -4,7 +4,7 @@ import PostReducer from '../reducer/PostReducer';
 
 const rootReducer = combineReducers({
     itemReducer,
-    // PostReducer
+    PostReducer
 });
 
 export default rootReducer;
