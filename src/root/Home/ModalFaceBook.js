@@ -12,6 +12,7 @@ import React, {useState, useEffect} from 'react';
 import {img} from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 const ModalFaceBook = props => {
   const  {name, setPost, post,favorite,setFavorite} = props
@@ -19,7 +20,7 @@ const ModalFaceBook = props => {
   const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState();
   const [isIndex,setIsIndex]=useState(0)
-
+  // const dispatch= useDispatch()
   const onChangeText = val => setText(val);
   const newItem = {
     id:  Date.now(),
@@ -28,14 +29,14 @@ const ModalFaceBook = props => {
     favorite
   }
 
-  const onPost = async () => {
+  const onPost = async (data) => {
     let newPost = [...post]
     newPost.push(newItem)
     setPost(newPost) 
     setIsIndex(isIndex+1)
-    // setFavorite(favorite)
+    // dispatch({type:"Post", data:data})
     setModalVisible(!modalVisible);
-    AsyncStorage.setItem("@Post",JSON.stringify(post))
+    // AsyncStorage.setItem("@Post",JSON.stringify(post))
 
   };
  

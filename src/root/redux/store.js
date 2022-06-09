@@ -3,6 +3,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import rootReducer from './redux'
 import { configureStore } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { applyMiddleware } from 'redux';
 
 const persistConfig = {
   key: 'root',
@@ -15,6 +16,6 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-})
+},applyMiddleware)
 export const persistor = persistStore(store)
 export default store;

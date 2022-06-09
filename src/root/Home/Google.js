@@ -29,15 +29,8 @@ const Google = (props) => {
   const [post, setPost] = useState([]);
   useEffect(() => {
     getDataG();
-    getDataPost()
+    // getDataPost()
   }, [info]);
-  
-  const getDataPost=async()=>{
-   await AsyncStorage.getItem("@Post")
-    setPost(JSON.parse(post))
-    console.log("hhhh:",JSON.parse(post));
-  }
-
   const getDataG = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@UserName');
@@ -51,19 +44,22 @@ const Google = (props) => {
   };
   const [favorite, setFavorite] = useState(false)
     const [numberLike, setNumberLike] = useState(0)
+    
     const onLike = () => {
       if (favorite) {
         setNumberLike(favorite - 1)
-      setPost(post)
+        setFavorite(!favorite)
       }
       else {
         setNumberLike(favorite + 1)
-      setPost(post)
+        setFavorite(!favorite)
       }
+      
       setFavorite(!favorite)
     }
   const ItemPost = ({ item, index }) => {
-    // const indexOfItem = post.indexOf(item)
+    console.log("item:",item);
+    console.log("favorite",favorite);
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -86,7 +82,7 @@ const Google = (props) => {
           <Text>{numberLike}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-around", borderTopWidth: 0.4, padding: 10 }}>
-          {favorite
+          {item.favorite
             ?
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={onLike}>
               <Image source={icon.like} style={styles.dislike} />

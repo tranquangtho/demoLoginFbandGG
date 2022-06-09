@@ -5,10 +5,9 @@ const initialState = {
 export default function itemReducer(state = initialState, action) {
     switch (action.type) {
         case 'User_Login':
-            console.log('userInfo redux', action.data)
             return {
-                items: action,
-            };
+                items:action
+            }
             
         default:
             return state;

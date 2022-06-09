@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../root/Home/Home';
-import FaceBook from '../root/login/ModalFaceBook';
-import Google from '../root/login/Google';
+import FaceBook from '../root/Home/ModalFaceBook';
+import Google from '../root/Home/Google';
 import Login from '../root/login/Login';
 import React from 'react';
-import ModalFaceBook from '../root/login/ModalFaceBook';
+import ModalFaceBook from '../root/Home/ModalFaceBook';
 const MainStack = createNativeStackNavigator()
 
  export default function MyTabs() {

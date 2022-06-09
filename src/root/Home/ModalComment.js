@@ -1,12 +1,15 @@
 import { View, Text, Modal,StyleSheet, Image,Pressable, FlatList, TextInput, TouchableOpacity } from 'react-native'
 import React, { useState,useEffect } from 'react'
 import { icon,img } from '../../asset';
+import { useDispatch } from 'react-redux';
+
 import { AsyncStorage } from '@react-native-async-storage/async-storage';
 const ModalComment=(props)=> {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [comment,setComment]=useState('')
   const [textA,setTextA]=useState()
+  // const dispatch= useDispatch()
   const onChangeText = val=>{
     setTextA(val)
   }
@@ -20,6 +23,7 @@ const ModalComment=(props)=> {
       let newSend = [...comment]
       newSend.push(newItem)
       setComment(newSend)
+      // dispatch({type:"Comment", data:data})
     };
     const modalView=()=>{
       setModalVisible(!modalVisible)

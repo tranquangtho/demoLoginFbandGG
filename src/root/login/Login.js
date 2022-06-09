@@ -15,7 +15,6 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { LoginButton, AccessToken, Profile, Settings, LoginManager } from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Google from './Google';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
@@ -31,7 +30,6 @@ GoogleSignin.configure({
 const Login = () => {
   // const [user,setUser]=useState('')
   // const [info,setInfo]=useState(null)
-  const [ready, setReady] = useState(false)
   const navigation = useNavigation();
   const dispatch = useDispatch()
 
@@ -68,19 +66,17 @@ const Login = () => {
           await AsyncStorage.setItem("@UserName", value)
           dispatch({ type: "User_Login", data: data })
           navigation.navigate("Google")
-          //  setReady(!ready)
         }
         )
-
       }
-      // if(setReady == true){
-      //     return <Google />
-      // }
     }, function (error) {
       console.log(error);
     }
     )
   };
+  useEffect(()=>{
+    
+  })
 
   return (
     <ImageBackground source={img.imgLogin2} style={{ flex: 1, justifyContent: "center" }}>
