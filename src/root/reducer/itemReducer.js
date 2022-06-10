@@ -1,18 +1,22 @@
-import { useNavigation } from '@react-navigation/native';
-
 const initialState = {
-    items: {},
+    user: {},
+    activeId:null
 };
 export default function itemReducer(state = initialState, action) {
-  const navigation = useNavigation();
 
     switch (action.type) {
         case 'User_Login':
-            navigation.navigate("Google")
+        console.log("Acction:",action.payload);
             return {
-                ...state,       
+                ...state,
+                user:action.payload           
             }
-            
+        case 'LOG_OUT':
+            console.log("user_name:", action.data.name);
+            return {
+                user:{}
+            }
+
         default:
             return state;
     }

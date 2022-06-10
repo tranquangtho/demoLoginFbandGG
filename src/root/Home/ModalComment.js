@@ -10,6 +10,9 @@ const ModalComment=(props)=> {
   const [comment,setComment]=useState('')
   const [textA,setTextA]=useState()
   // const dispatch= useDispatch()
+  // const addTextA=useSelector(state=>state.add.TextA)
+  // const addComment=useSelector(state=>state.add.comment)
+
   const onChangeText = val=>{
     setTextA(val)
   }

@@ -13,35 +13,22 @@ import {img} from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
 import { useDispatch,useSelector } from 'react-redux';
-
 const ModalFaceBook = props => {
-  const  {name, setPost, post,favorite,setFavorite} = props
+  const  {post,handlePost,onChangeText} = props
    const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState();
-  const [isIndex,setIsIndex]=useState(0)
-  // const dispatch=useDispatch()
-  // const addPost=useSelector(state=>state.add.post)
-  const onChangeText = val => setText(val);
+  // const [isIndex,setIsIndex]=useState(0)
+  const dispatch=useDispatch()
+  const imageURL=useSelector(state=>state.user)
+  // const addtext=useSelector(state=>state.add.text)
+  // const addIndex=useSelector(state=>state.add.Index)
 
 
   const onPost = async (data) => {
-    const newItem = {
-      id:  Date.now(),
-      time: Date.now(),
-      text,
-      favorite
+    if(handlePost){
+      handlePost(data)
     }
-    // const action= addContent(newItem)
-    // dispatch(action)
-    let newPost = [...post]
-    newPost.push(newItem)
-    setPost(newPost) 
-    setIsIndex(isIndex+1)
-    dispatch({type:"Post", data:data})
     setModalVisible(!modalVisible);
-    // AsyncStorage.setItem("@Post",JSON.stringify(post))
-
   };
  
 
@@ -51,7 +38,7 @@ const ModalFaceBook = props => {
         <View>
           <View style={{flexDirection: 'row', marginTop:10}}>
             <Image source={img.imgLogin} style={styles.avatar} />
-            <Text style={{color: 'black', fontSize: 20}}>{name}</Text>
+            <Text style={{color: 'black', fontSize: 20}}>tqt</Text>
           </View>
           <Pressable style={{backgroundColor: '#f9ffb1'}}>
             <TextInput
@@ -78,7 +65,7 @@ const ModalFaceBook = props => {
         </View>
       </Modal>
       <View style={{flexDirection:"row",height:50,alignItems:"center",paddingLeft:10,backgroundColor:"white"}}>
-            <Image source={img.imgLogin} style={{height:35,width:35,marginRight:20,borderRadius:50}}/>
+            <Image source={{uri:imageURL?.user?.imageURL}} style={{height:35,width:35,marginRight:20,borderRadius:50}}/>
       <Pressable onPress={() => setModalVisible(true)} style={{borderWidth:1,width:"70%",height:35,borderRadius:30,justifyContent:"center"}} >
         <Text style={{marginLeft:20}}>bạn đang nghĩ gì</Text>
       </Pressable>

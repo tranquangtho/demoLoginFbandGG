@@ -3,8 +3,8 @@ import itemReducer from '../reducer/itemReducer';
 import PostReducer from '../reducer/PostReducer';
 
 const rootReducer = combineReducers({
-    itemReducer,
-    PostReducer
+    user:itemReducer,
+    add:PostReducer
 });
 
 export default rootReducer;

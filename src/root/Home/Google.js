@@ -21,83 +21,81 @@ import { useNavigation } from '@react-navigation/native';
 import { Value, log } from 'react-native-reanimated';
 import ModalComment from './ModalComment';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { addNewPost } from '../action/Post';
+import { addNewInfo } from '../action/user';
+import { newDelete } from '../action/Post';
 
 
 const Google = (props) => {
   const navigation = useNavigation();
-  const [info, setInfo] = useState('');
-  const [post, setPost] = useState([]);
+    const dispatch= useDispatch()
 
-  useEffect(() => {
-    getDataG();
-    // getDataPost()
-  }, [info]);
-  const getDataG = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@UserName');
-      if (jsonValue !== null) {
-        const value = JSON.parse(jsonValue);
-        setInfo(value.name);
-      }
-    } catch (error) {
-      console.log(error);
+  const addPost=useSelector(state=>state.add.post)
+  const addUserName=useSelector(state=>state.user)
+  // const addInfo=useSelector(state=>state.add.info)
+  // const addContent=useSelector(state=>state.add.post)
+  // const addComment=useSelector(state=>state.add.post)
+  // const addLike=useSelector(state=>state.add.post)
+  // const addCountLike=useSelector(state=>state.add.post)
+  // const addCountComment=useSelector(state=>state.add.post)
+  // const text=useSelector(state=>state.add.post)
+
+  const onChangeText = val => setText(val);
+  const [text, setText] = useState();
+
+  const handlePost =()=>{
+    const newItem = {
+      id:  Date.now(),
+      time: Date.now(),
+      text,
+      addUserName
     }
-  };
-  const [favorite, setFavorite] = useState(false)
-    const [numberLike, setNumberLike] = useState(0)
-    
-    const onLike = () => {
-      if (favorite) {
-        setNumberLike(favorite - 1)
-        setFavorite(!favorite)
-      }
-      else {
-        setNumberLike(favorite + 1)
-        setFavorite(!favorite)
-      }
-      
-      setFavorite(!favorite)
-    }
+    const action= addNewPost(newItem)
+    dispatch(action)
+  }
+  const deletePost =(post)=>{
+    console.log("posttttt:",post.id);
+    const removePostId = post.id
+    const action = newDelete(removePostId)
+    dispatch(action)
+  }
   const ItemPost = ({ item, index }) => {
-    console.log("item:",item);
-    console.log("favorite",favorite);
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
           <View style={{ flexDirection: 'row' }}>
             <View>
-              <Image source={img.imgLogin} style={styles.imgAvatar} />
+              <Image source={{uri:addUserName?.user?.imageURL}} style={styles.imgAvatar} />
             </View>
             <View style={{ justifyContent: 'center' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>{info}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>{addUserName?.user?.name}</Text>
             </View>
           </View>
-          <TouchableOpacity  >
+          <TouchableOpacity onPress={deletePost} >
             <Image source={icon.cancel} style={styles.cancel} />
           </TouchableOpacity>
         </View>
         <View style={{ margin: 10 }}>
-          <Text style={{ fontSize: 16, color: "black" }}>{item.text}</Text>
+          <Text style={{ fontSize: 16, color: "black" }}>{text}</Text>
         </View>
         <View style={{ margin: 10 }}>
-          <Text>{numberLike}</Text>
+          <Text>aaa</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-around", borderTopWidth: 0.4, padding: 10 }}>
-          {item.favorite
+          {/* {favorite
             ?
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={onLike}>
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
               <Image source={icon.like} style={styles.dislike} />
               <Text style={{ fontSize: 16 }}>Bỏ thích</Text>
             </TouchableOpacity>
-            :
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={onLike}>
+            : */}
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>Thích</Text>
             </TouchableOpacity>
 
-          }
-          <ModalComment name={info} />
+          {/* } */}
+          <ModalComment />
           <View style={{ flexDirection: "row" }}>
             <Image source={icon.cancel} style={{ height: 20, width: 20, marginRight: 5 }} />
             <Text style={{ fontSize: 18 }}>Chia Sẻ</Text>
@@ -109,9 +107,9 @@ const Google = (props) => {
 
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <ModalFaceBook name={info} setPost={setPost} post={post} favorite={favorite} setFavorite={setFavorite}  />
+      <ModalFaceBook post={addPost} handlePost={handlePost} onChangeText={onChangeText}/>
       <FlatList
-        data={post}
+        data={addPost}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => (<ItemPost item={item} index={index}  />)}
       />

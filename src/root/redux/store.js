@@ -7,7 +7,8 @@ import { applyMiddleware } from 'redux';
 
 const persistConfig = {
   key: 'root',
-  storage: AsyncStorage
+  storage: AsyncStorage,
+  whileList:["user"]
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = configureStore({

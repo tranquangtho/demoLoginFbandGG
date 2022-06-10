@@ -18,6 +18,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { addNewUSer } from '../action/user';
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
@@ -62,9 +63,8 @@ const Login = () => {
       } else {
         console.log("Login success with permissions:");
         await Profile.getCurrentProfile().then(async (data) => {
-          const value = JSON.stringify(data)
-          await AsyncStorage.setItem("@UserName", value)
-          dispatch({ type: "User_Login", data: data })
+          const action = addNewUSer(data)
+          dispatch(action)
           navigation.navigate("Google")
         }
         )
