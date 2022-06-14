@@ -17,8 +17,9 @@ import { LoginButton, AccessToken, Profile, Settings, LoginManager } from 'react
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector} from 'react-redux';
 import { addNewUSer } from '../action/user';
+import Google from '../Home/Google';
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
@@ -33,7 +34,7 @@ const Login = () => {
   // const [info,setInfo]=useState(null)
   const navigation = useNavigation();
   const dispatch = useDispatch()
-
+  const dataUser =useSelector(state=>state.user)
 
 
 
@@ -74,32 +75,34 @@ const Login = () => {
     }
     )
   };
+
   useEffect(()=>{
-    
-  })
-
-  return (
-    <ImageBackground source={img.imgLogin2} style={{ flex: 1, justifyContent: "center" }}>
-      <View style={styles.taiKhoan}>
-        <Image source={img.user} style={{ height: 30, width: 30 }} />
-        <TextInput placeholder='UserName' />
-      </View>
-      <View style={styles.matKhau}>
-        <Image source={img.lock} style={{ height: 30, width: 30 }} />
-
-        <TextInput placeholder='PassWord' />
-      </View>
-      <View>
-
-        <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
-          <Image source={img.imageGoogle} style={{ height: 30, width: "100%" }} />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={LoginFb} style={styles.LoginFb}>
-          <Image source={img.imageFacebook} style={{ height: 30, width: "100%" }} resizeMode='cover' />
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
-  );
+    if(dataUser){
+      return <Google/>
+    }
+  },[])
+    return (
+      <ImageBackground source={img.imgLogin2} style={{ flex: 1, justifyContent: "center" }}>
+        <View style={styles.taiKhoan}>
+          <Image source={img.user} style={{ height: 30, width: 30 }} />
+          <TextInput placeholder='UserName' />
+        </View>
+        <View style={styles.matKhau}>
+          <Image source={img.lock} style={{ height: 30, width: 30 }} />
+  
+          <TextInput placeholder='PassWord' />
+        </View>
+        <View>
+  
+          <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
+            <Image source={img.imageGoogle} style={{ height: 30, width: "100%" }} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={LoginFb} style={styles.LoginFb}>
+            <Image source={img.imageFacebook} style={{ height: 30, width: "100%" }} resizeMode='cover' />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    );
 }
 const styles = StyleSheet.create({
 

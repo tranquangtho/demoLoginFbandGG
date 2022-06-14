@@ -8,39 +8,45 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {img} from '../../asset';
+import React, { useState, useEffect } from 'react';
+import { img } from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/native';
-import { useDispatch,useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addNewPost } from '../action/Post';
 const ModalFaceBook = props => {
-  const  {post,handlePost,onChangeText} = props
-   const navigation = useNavigation();
+  const { addUserName, addPost,isLike,setIsLike} = props
+  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
-  // const [isIndex,setIsIndex]=useState(0)
-  const dispatch=useDispatch()
-  const imageURL=useSelector(state=>state.user)
-  // const addtext=useSelector(state=>state.add.text)
-  // const addIndex=useSelector(state=>state.add.Index)
+  const dispatch = useDispatch()
 
+  
+  const onChangeText = val => setText(val);
+  const [text, setText] = useState();
 
-  const onPost = async (data) => {
-    if(handlePost){
-      handlePost(data)
-    }
-    setModalVisible(!modalVisible);
-  };
+  const handlePost = () => {
  
+    const newItem = {
+      id: Date.now(),
+      time: Date.now(),
+      text,
+      like:isLike
+    }
+    const newList = [...addPost, newItem]
+    dispatch(addNewPost(newList))
+    setModalVisible(!modalVisible);
+  }
+
 
   return (
     <View style={styles.modal}>
       <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false}>
         <View>
-          <View style={{flexDirection: 'row', marginTop:10}}>
-            <Image source={img.imgLogin} style={styles.avatar} />
-            <Text style={{color: 'black', fontSize: 20}}>tqt</Text>
+          <View style={{ flexDirection: 'row', marginTop: 10 }}>
+            <Image source={{ uri: addUserName?.imageURL }} style={styles.avatar} />
+            <Text style={{ color: 'black', fontSize: 20 }}>{addUserName.name}</Text>
           </View>
-          <Pressable style={{backgroundColor: '#f9ffb1'}}>
+          <Pressable style={{ backgroundColor: '#f9ffb1' }}>
             <TextInput
               maxLength={999}
               multiline
@@ -58,17 +64,17 @@ const ModalFaceBook = props => {
               width: 50,
               backgroundColor: 'blue',
             }}>
-            <TouchableOpacity onPress={onPost}>
+            <TouchableOpacity onPress={handlePost}>
               <Text>Đăng</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
-      <View style={{flexDirection:"row",height:50,alignItems:"center",paddingLeft:10,backgroundColor:"white"}}>
-            <Image source={{uri:imageURL?.user?.imageURL}} style={{height:35,width:35,marginRight:20,borderRadius:50}}/>
-      <Pressable onPress={() => setModalVisible(true)} style={{borderWidth:1,width:"70%",height:35,borderRadius:30,justifyContent:"center"}} >
-        <Text style={{marginLeft:20}}>bạn đang nghĩ gì</Text>
-      </Pressable>
+      <View style={{ flexDirection: "row", height: 50, alignItems: "center", paddingLeft: 10, backgroundColor: "white" }}>
+        <Image source={{ uri: addUserName.imageURL }} style={{ height: 35, width: 35, marginRight: 20, borderRadius: 50 }} />
+        <Pressable onPress={() => setModalVisible(true)} style={{ borderWidth: 1, width: "70%", height: 35, borderRadius: 30, justifyContent: "center" }} >
+          <Text style={{ marginLeft: 20 }}>bạn đang nghĩ gì</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -76,7 +82,7 @@ const ModalFaceBook = props => {
 const styles = StyleSheet.create({
   modal: {
     borderWidth: 0.5,
-    marginTop:10
+    marginTop: 10
   },
   avatar: {
     height: 50,

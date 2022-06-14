@@ -7,6 +7,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import store,{persistor} from './src/root/redux/store';
 import persistStore from 'redux-persist/es/persistStore';
 import Google from './src/root/Home/Google';
+
 export default function App() {
     return(
       <Provider store={store}>

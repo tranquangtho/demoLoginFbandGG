@@ -1,17 +1,15 @@
 const initialState = {
-    post: [],
-    activeId: null
+    post:[],
+    activeId:null
 }
 
 export default function PostReducer(state = initialState, action) {
 
     switch (action.type) {
         case 'POST':
-            const newList = [...state.post]
-            newList.push(action)
             return {
                 ...state,
-                post: newList
+                post: action.payload
             }
         case 'COMMENT':
             console.log("Comment type :", action);
@@ -42,11 +40,10 @@ export default function PostReducer(state = initialState, action) {
             return state
 
         case 'DELETE_POST':
-            console.log("delete type :", action);
-            const removePostId= action.payload
-            state=state.filter(post=>post.id !== removePostId)
-            return state
-
+            return {
+                post:action.payload
+            }
+            //
         default:
             return state;
     }

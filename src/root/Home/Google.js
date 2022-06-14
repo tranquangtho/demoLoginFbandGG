@@ -24,77 +24,69 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addNewPost } from '../action/Post';
 import { addNewInfo } from '../action/user';
 import { newDelete } from '../action/Post';
-
+import { addNewLike } from '../action/Post';
 
 const Google = (props) => {
   const navigation = useNavigation();
-    const dispatch= useDispatch()
+  const dispatch = useDispatch()
+  const addUserName = useSelector(state => state.user.user)
 
-  const addPost=useSelector(state=>state.add.post)
-  const addUserName=useSelector(state=>state.user)
-  // const addInfo=useSelector(state=>state.add.info)
-  // const addContent=useSelector(state=>state.add.post)
-  // const addComment=useSelector(state=>state.add.post)
-  // const addLike=useSelector(state=>state.add.post)
-  // const addCountLike=useSelector(state=>state.add.post)
-  // const addCountComment=useSelector(state=>state.add.post)
-  // const text=useSelector(state=>state.add.post)
+  const addPost = useSelector(state => state.add.post)
+  console.log("add:",addPost);
 
-  const onChangeText = val => setText(val);
-  const [text, setText] = useState();
-
-  const handlePost =()=>{
-    const newItem = {
-      id:  Date.now(),
-      time: Date.now(),
-      text,
-      addUserName
-    }
-    const action= addNewPost(newItem)
-    dispatch(action)
-  }
-  const deletePost =(post)=>{
-    console.log("posttttt:",post.id);
-    const removePostId = post.id
-    const action = newDelete(removePostId)
-    dispatch(action)
-  }
+  const [isLike,setIsLike]=useState(false)
   const ItemPost = ({ item, index }) => {
+    const deleteData=(data)=>{
+    const removePhotoId = item.id;
+
+     const value= addPost.filter(a=>a.id !==removePhotoId)
+     console.log("value:",value);
+    const action = newDelete(value);
+
+    dispatch(action);
+    }
+    // const likeNewPost=()=>{
+    //   if(!item.like){
+    //     setIsLike(!isLike)
+    //   }else{
+    //     setIsLike(!isLike)
+    //   }
+    // }
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
           <View style={{ flexDirection: 'row' }}>
             <View>
-              <Image source={{uri:addUserName?.user?.imageURL}} style={styles.imgAvatar} />
+              <Image source={{uri:addUserName?.imageURL}} style={styles.imgAvatar} />
             </View>
             <View style={{ justifyContent: 'center' }}>
-              <Text style={{ fontWeight: 'bold', color: 'black' }}>{addUserName?.user?.name}</Text>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>{addUserName?.name}</Text>
             </View>
           </View>
-          <TouchableOpacity onPress={deletePost} >
+          <TouchableOpacity  onPress={deleteData} >
             <Image source={icon.cancel} style={styles.cancel} />
           </TouchableOpacity>
         </View>
         <View style={{ margin: 10 }}>
-          <Text style={{ fontSize: 16, color: "black" }}>{text}</Text>
+          <Text style={{ fontSize: 16, color: "black" }}>{item.text}</Text>
         </View>
         <View style={{ margin: 10 }}>
           <Text>aaa</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-around", borderTopWidth: 0.4, padding: 10 }}>
-          {/* {favorite
+          {!item.like
             ?
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}>
-              <Image source={icon.like} style={styles.dislike} />
-              <Text style={{ fontSize: 16 }}>Bỏ thích</Text>
-            </TouchableOpacity>
-            : */}
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} >
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}  >
               <Image source={icon.like} style={styles.like} />
-              <Text style={{ fontSize: 16 }}>Thích</Text>
+              <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
+            :
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}  >
+            <Image source={icon.like} style={styles.dislike} />
+            <Text style={{ fontSize: 16 }}>bo Thích</Text>
+          </TouchableOpacity>
 
-          {/* } */}
+          }
           <ModalComment />
           <View style={{ flexDirection: "row" }}>
             <Image source={icon.cancel} style={{ height: 20, width: 20, marginRight: 5 }} />
@@ -104,14 +96,17 @@ const Google = (props) => {
       </View>
     )
   }
-
+  // if(addUserName)
+  // {
+  //   return
+  // }
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <ModalFaceBook post={addPost} handlePost={handlePost} onChangeText={onChangeText}/>
+      <ModalFaceBook addUserName={addUserName} addPost={addPost} isLike={isLike} setIsLike={setIsLike} />
       <FlatList
         data={addPost}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => (<ItemPost item={item} index={index}  />)}
+        renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
       />
     </View>
   );
