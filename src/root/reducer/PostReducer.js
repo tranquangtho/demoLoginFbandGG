@@ -21,14 +21,17 @@ export default function PostReducer(state = initialState, action) {
 
         case 'LIKE':
             console.log("LIKE type :", action);
-            return state
+            return {
+                ...state,
+                 post:[...state.post,post]
+            }
 
         case 'SHARE':
             console.log("SHARE type :", action);
             return state
 
         case 'COUNT_LIKE':
-            console.log("count Like type :", action);
+            // console.log("count Like type :", action);
             return state
 
         case 'COUNT_COMMENT':

@@ -15,11 +15,10 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPost } from '../action/Post';
 const ModalFaceBook = props => {
-  const { addUserName, addPost,isLike,setIsLike} = props
+  const { addUserName, addPost} = props
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
-
   
   const onChangeText = val => setText(val);
   const [text, setText] = useState();
@@ -30,14 +29,12 @@ const ModalFaceBook = props => {
       id: Date.now(),
       time: Date.now(),
       text,
-      like:isLike
+      isLike
     }
     const newList = [...addPost, newItem]
     dispatch(addNewPost(newList))
     setModalVisible(!modalVisible);
   }
-
-
   return (
     <View style={styles.modal}>
       <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false}>

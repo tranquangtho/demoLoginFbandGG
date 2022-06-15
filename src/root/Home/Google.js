@@ -11,7 +11,7 @@ import {
   FlatList,
   ImageBackground
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
@@ -25,33 +25,51 @@ import { addNewPost } from '../action/Post';
 import { addNewInfo } from '../action/user';
 import { newDelete } from '../action/Post';
 import { addNewLike } from '../action/Post';
+import { logOutUser } from '../action/user';
+import { set } from 'immer/dist/internal';
 
-const Google = (props) => {
+const Google = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
-
   const addPost = useSelector(state => state.add.post)
+  const [isLike,setIsLike]=useState(false)
+
   console.log("add:",addPost);
 
-  const [isLike,setIsLike]=useState(false)
-  const ItemPost = ({ item, index }) => {
+
+
+  const onLogOut=()=>{
+    dispatch(logOutUser(addUserName))
+    navigation.navigate("Login")
+    AsyncStorage.clear()
+  }
+  const updateLike=(newList)=>{
+    setIsLike(newList)
+  }
+
+  const ItemPost = ({ item, index },props) => {
+    const {isLike,setIsLike}=props
+  const [count,setCount]=useState(0)
+
     const deleteData=(data)=>{
     const removePhotoId = item.id;
-
      const value= addPost.filter(a=>a.id !==removePhotoId)
-     console.log("value:",value);
     const action = newDelete(value);
-
     dispatch(action);
     }
-    // const likeNewPost=()=>{
-    //   if(!item.like){
-    //     setIsLike(!isLike)
-    //   }else{
-    //     setIsLike(!isLike)
-    //   }
-    // }
+    const likeNewPost=()=>{
+
+      if(isLike){
+        setCount(item.isLike - 1)
+        
+      }else{
+        setCount(item.isLike + 1)
+      }
+      setIsLike(!isLike)
+      // dispatch(addNewP(isLike))
+    }
+    
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -71,18 +89,18 @@ const Google = (props) => {
           <Text style={{ fontSize: 16, color: "black" }}>{item.text}</Text>
         </View>
         <View style={{ margin: 10 }}>
-          <Text>aaa</Text>
+          <Text>{count}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-around", borderTopWidth: 0.4, padding: 10 }}>
-          {!item.like
+          {!isLike
             ?
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }}  >
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={likeNewPost}  >
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
             :
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}  >
-            <Image source={icon.like} style={styles.dislike} />
+          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
+            <Image source={icon.blueLike} style={styles.like} />
             <Text style={{ fontSize: 16 }}>bo Thích</Text>
           </TouchableOpacity>
 
@@ -96,17 +114,17 @@ const Google = (props) => {
       </View>
     )
   }
-  // if(addUserName)
-  // {
-  //   return
-  // }
+ 
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <ModalFaceBook addUserName={addUserName} addPost={addPost} isLike={isLike} setIsLike={setIsLike} />
+      <TouchableOpacity onPress={onLogOut}>
+        <Text>LogOut</Text>
+      </TouchableOpacity>
+      <ModalFaceBook addUserName={addUserName} addPost={addPost} isLike={isLike}  />
       <FlatList
         data={addPost}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
+        renderItem={({ item, index }) => <ItemPost item={item} index={index}  isLike={isLike} setIsLike={setIsLike()} />}
       />
     </View>
   );
@@ -191,4 +209,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default Google;
+export default memo(Google);

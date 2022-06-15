@@ -10,3 +10,9 @@ export const addNewUSer=(user)=>{
         payload:user
     }
 }
+export const logOutUser=(user)=>{
+    return {
+        type:"LOG_OUT",
+        payload:user
+    }
+}

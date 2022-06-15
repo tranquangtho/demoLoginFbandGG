@@ -29,7 +29,6 @@ export const addNewPost=(add)=>{
     }
 }
 export const  newDelete =(add)=>{
-    console.log("id:",add);
     return {
         type:"DELETE_POST",
         payload:add
