@@ -18,24 +18,19 @@ import auth from '@react-native-firebase/auth';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
 import { useNavigation } from '@react-navigation/native';
-import { Value, log } from 'react-native-reanimated';
-import ModalComment from './ModalComment';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPost } from '../action/Post';
 import { addNewInfo } from '../action/user';
 import { newDelete } from '../action/Post';
 import { addNewLike } from '../action/Post';
 import { logOutUser } from '../action/user';
-import { set } from 'immer/dist/internal';
+import Comment from './Comment';
 
 const Google = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
   const addPost = useSelector(state => state.add.post)
-  const [isLike,setIsLike]=useState(false)
-
-  console.log("add:",addPost);
 
 
 
@@ -44,32 +39,31 @@ const Google = () => {
     navigation.navigate("Login")
     AsyncStorage.clear()
   }
-  const updateLike=(newList)=>{
-    setIsLike(newList)
-  }
+ 
 
-  const ItemPost = ({ item, index },props) => {
-    const {isLike,setIsLike}=props
+  const ItemPost = ({ item, index }) => {
+  const [isLike,setIsLike]=useState(false)
+
   const [count,setCount]=useState(0)
-
     const deleteData=(data)=>{
     const removePhotoId = item.id;
      const value= addPost.filter(a=>a.id !==removePhotoId)
     const action = newDelete(value);
     dispatch(action);
     }
-    const likeNewPost=()=>{
+    const likeNewPost=(a)=>{
 
       if(isLike){
-        setCount(item.isLike - 1)
-        
+        setCount(isLike - 1)
+         item.isLike=!isLike
       }else{
-        setCount(item.isLike + 1)
+        setCount(isLike + 1)
+          item.isLike=!isLike
       }
       setIsLike(!isLike)
-      // dispatch(addNewP(isLike))
+      // dispatch(addNewLike(addPost))
+      console.log(addPost);
     }
-    
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -105,7 +99,11 @@ const Google = () => {
           </TouchableOpacity>
 
           }
-          <ModalComment />
+
+          <TouchableOpacity style={{flexDirection:"row"}} onPress={()=>navigation.navigate("Comment")}>
+            <Image source={icon.comment} style={{height:24,width:26}}/>
+            <Text>bình luận</Text>
+          </TouchableOpacity>
           <View style={{ flexDirection: "row" }}>
             <Image source={icon.cancel} style={{ height: 20, width: 20, marginRight: 5 }} />
             <Text style={{ fontSize: 18 }}>Chia Sẻ</Text>
@@ -120,11 +118,11 @@ const Google = () => {
       <TouchableOpacity onPress={onLogOut}>
         <Text>LogOut</Text>
       </TouchableOpacity>
-      <ModalFaceBook addUserName={addUserName} addPost={addPost} isLike={isLike}  />
+      <ModalFaceBook addUserName={addUserName} addPost={addPost} />
       <FlatList
         data={addPost}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => <ItemPost item={item} index={index}  isLike={isLike} setIsLike={setIsLike()} />}
+        renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
       />
     </View>
   );
@@ -209,4 +207,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default memo(Google);
+export default Google;

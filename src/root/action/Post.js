@@ -10,6 +10,13 @@ export const addComment=(add)=>{
         payload:add
     }
 }
+export const deleteComment=(add)=>{
+    return {
+        type:"DELETE_COMMENT",
+        payload:add
+    }
+}
+
 export const addNewLike=(add)=>{
     return {
         type:"LIKE",

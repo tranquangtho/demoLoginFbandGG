@@ -4,6 +4,7 @@ import Google from '../root/Home/Google';
 import Login from '../root/login/Login';
 import React from 'react';
 import ModalFaceBook from '../root/Home/ModalFaceBook';
+import Comment from '../root/Home/Comment';
 const MainStack = createNativeStackNavigator()
 
  export default function MyTabs() {
@@ -12,6 +13,7 @@ const MainStack = createNativeStackNavigator()
         <MainStack.Screen name="Login" component={Login} />
         <MainStack.Screen name="Google" component={Google} />
         <MainStack.Screen name="FaceBook" component={ModalFaceBook} />
+        <MainStack.Screen name="Comment" component={Comment} />
       </MainStack.Navigator>
   );
 }

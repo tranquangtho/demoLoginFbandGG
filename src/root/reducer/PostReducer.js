@@ -1,6 +1,6 @@
 const initialState = {
-    post:[],
-    activeId:null
+    post: [],
+    activeId: null
 }
 
 export default function PostReducer(state = initialState, action) {
@@ -12,8 +12,16 @@ export default function PostReducer(state = initialState, action) {
                 post: action.payload
             }
         case 'COMMENT':
-            console.log("Comment type :", action);
-            return state
+            console.log("Comment type123 :", action);
+            return {
+                ...state,
+                post: action.payload
+            }
+            case 'DELETE_COMMENT':
+                console.log(" delete Comment type :", action);
+                return {
+                    post: action.payload
+                }
 
         case 'CONTENT':
             console.log("Comment type :", action);
@@ -23,7 +31,7 @@ export default function PostReducer(state = initialState, action) {
             console.log("LIKE type :", action);
             return {
                 ...state,
-                 post:[...state.post,post]
+                post: action.payload
             }
 
         case 'SHARE':
@@ -44,9 +52,9 @@ export default function PostReducer(state = initialState, action) {
 
         case 'DELETE_POST':
             return {
-                post:action.payload
+                post: action.payload
             }
-            //
+        //
         default:
             return state;
     }
