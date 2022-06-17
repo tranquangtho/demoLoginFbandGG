@@ -76,8 +76,7 @@ const Login = () => {
     )
   };
 
-  console.log("dataUser :", dataUser);
-  // useEffect(()=>{
+1  // useEffect(()=>{
   //   if(dataUser.imageURL != null)
   //   {
   //     return (<Google/>)

@@ -7,6 +7,8 @@ export default function PostReducer(state = initialState, action) {
 
     switch (action.type) {
         case 'POST':
+        console.log("post action :",action.payload);
+
             return {
                 ...state,
                 post: action.payload
@@ -53,6 +55,13 @@ export default function PostReducer(state = initialState, action) {
         case 'DELETE_POST':
             return {
                 post: action.payload
+            }
+
+            case 'ADD_COMMENT_TO_POST':{
+                return {
+                    ...state,
+                    post: action.payload
+                }
             }
         //
         default:

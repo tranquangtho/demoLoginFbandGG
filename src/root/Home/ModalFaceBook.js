@@ -38,7 +38,7 @@ const ModalFaceBook = props => {
     setModalVisible(!modalVisible)
    }
 
-
+   
 
   return (
     <View style={styles.modal}>

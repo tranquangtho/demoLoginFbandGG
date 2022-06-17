@@ -34,48 +34,50 @@ const Google = () => {
 
 
 
-  const onLogOut=()=>{
+  const onLogOut = () => {
     dispatch(logOutUser(addUserName))
     navigation.navigate("Login")
     AsyncStorage.clear()
   }
- 
+
 
   const ItemPost = ({ item, index }) => {
-  const [isLike,setIsLike]=useState(false)
+    const [isLike, setIsLike] = useState(false)
 
-  const [count,setCount]=useState(0)
-    const deleteData=(data)=>{
-    const removePhotoId = item.id;
-     const value= addPost.filter(a=>a.id !==removePhotoId)
-    const action = newDelete(value);
-    dispatch(action);
+    const [count, setCount] = useState(0)
+
+    const deleteData = () => {
+      const removePhotoId = item.id;
+      const value = addPost.filter(a => a.id !== removePhotoId)
+      const action = newDelete(value);
+      dispatch(action);
     }
-    const likeNewPost=(a)=>{
 
-      if(isLike){
+    const likeNewPost = (a) => {
+      if (isLike) {
         setCount(isLike - 1)
-         item.isLike=!isLike
-      }else{
+        item.isLike = !isLike
+      } else{
         setCount(isLike + 1)
-          item.isLike=!isLike
+        item.isLike = !isLike
       }
       setIsLike(!isLike)
-      // dispatch(addNewLike(addPost))
-      console.log(addPost);
+
     }
+    console.log("item.comment :",item.comment);
+
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
           <View style={{ flexDirection: 'row' }}>
             <View>
-              <Image source={{uri:addUserName?.imageURL}} style={styles.imgAvatar} />
+              <Image source={{ uri: addUserName?.imageURL }} style={styles.imgAvatar} />
             </View>
             <View style={{ justifyContent: 'center' }}>
               <Text style={{ fontWeight: 'bold', color: 'black' }}>{addUserName?.name}</Text>
             </View>
           </View>
-          <TouchableOpacity  onPress={deleteData} >
+          <TouchableOpacity onPress={deleteData} >
             <Image source={icon.cancel} style={styles.cancel} />
           </TouchableOpacity>
         </View>
@@ -93,15 +95,15 @@ const Google = () => {
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
             :
-          <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
-            <Image source={icon.blueLike} style={styles.like} />
-            <Text style={{ fontSize: 16 }}>bo Thích</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
+              <Image source={icon.blueLike} style={styles.like} />
+              <Text style={{ fontSize: 16 }}>bo Thích</Text>
+            </TouchableOpacity>
 
           }
 
-          <TouchableOpacity style={{flexDirection:"row"}} onPress={()=>navigation.navigate("Comment")}>
-            <Image source={icon.comment} style={{height:24,width:26}}/>
+          <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Comment",item)}>
+            <Image source={icon.comment} style={{ height: 24, width: 26 }} />
             <Text>bình luận</Text>
           </TouchableOpacity>
           <View style={{ flexDirection: "row" }}>
@@ -112,7 +114,7 @@ const Google = () => {
       </View>
     )
   }
- 
+
   return (
     <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
       <TouchableOpacity onPress={onLogOut}>
