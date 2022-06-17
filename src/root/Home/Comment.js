@@ -24,6 +24,7 @@ export default function Comment({ navigation,route }) {
     }
     let newList=[...route.params.comment]
     newList.push(newItem)
+    
     console.log(newList);
     console.log(addPost);
     console.log(route);
