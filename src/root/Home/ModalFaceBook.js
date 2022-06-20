@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPost } from '../action/Post';
 const ModalFaceBook = props => {
-  const { addUserName, addPost }= props
+  const { addUserName, posts }= props
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
@@ -33,9 +33,10 @@ const ModalFaceBook = props => {
       isLike:false,
       comment:[]
     }
-    const newList = [...addPost, newItem]
+    const newList = [...posts,newItem]
     dispatch(addNewPost(newList))
     setModalVisible(!modalVisible)
+
    }
 
    

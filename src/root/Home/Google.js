@@ -17,7 +17,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewPost } from '../action/Post';
 import { addNewInfo } from '../action/user';
@@ -30,7 +30,8 @@ const Google = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
-  const addPost = useSelector(state => state.add.post)
+  const posts = useSelector(state => state.add.post)
+
 
 
 
@@ -43,28 +44,29 @@ const Google = () => {
 
   const ItemPost = ({ item, index }) => {
     const [isLike, setIsLike] = useState(false)
-
     const [count, setCount] = useState(0)
-
+    // const route= useRoute()
     const deleteData = () => {
       const removePhotoId = item.id;
-      const value = addPost.filter(a => a.id !== removePhotoId)
+      const value = posts.filter(a => a.id !== removePhotoId)
       const action = newDelete(value);
       dispatch(action);
     }
 
     const likeNewPost = (a) => {
+      let newPost = [...posts]
+      const indexItem = newPost.indexOf(item)
+      
       if (isLike) {
         setCount(isLike - 1)
-        item.isLike = !isLike
-      } else{
+        newPost[indexItem].isLike =!isLike
+      } else {
         setCount(isLike + 1)
-        item.isLike = !isLike
+        newPost[indexItem].isLike =!isLike
       }
       setIsLike(!isLike)
-
-    }
-    console.log("item.comment :",item.comment);
+      console.log("posts:",newPost);
+    };
 
     return (
       <View style={styles.posts}>
@@ -102,7 +104,7 @@ const Google = () => {
 
           }
 
-          <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Comment",item)}>
+          <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Comment", item)}>
             <Image source={icon.comment} style={{ height: 24, width: 26 }} />
             <Text>bình luận</Text>
           </TouchableOpacity>
@@ -120,9 +122,9 @@ const Google = () => {
       <TouchableOpacity onPress={onLogOut}>
         <Text>LogOut</Text>
       </TouchableOpacity>
-      <ModalFaceBook addUserName={addUserName} addPost={addPost} />
+      <ModalFaceBook addUserName={addUserName} posts={posts} />
       <FlatList
-        data={addPost}
+        data={posts}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
       />

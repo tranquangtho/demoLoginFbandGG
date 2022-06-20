@@ -75,20 +75,11 @@ const Login = () => {
     }
     )
   };
-
-1  // useEffect(()=>{
-  //   if(dataUser.imageURL != null)
-  //   {
-  //     return (<Google/>)
-  //   }
-  // },[dataUser])
   return (
     <View>
-      {/* {dataUser.imageURL != null
-       ?
-        <Google />
-        : */}
-        <ImageBackground source={img.imgLogin2} style={{  justifyContent: "center"}}>
+      {/* {dataUser != null
+        ? */}
+        <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center" }}>
           <View style={styles.taiKhoan}>
             <Image source={img.user} style={{ height: 30, width: 30 }} />
             <TextInput placeholder='UserName' />
@@ -99,7 +90,6 @@ const Login = () => {
             <TextInput placeholder='PassWord' />
           </View>
           <View>
-
             <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
               <Image source={img.imageGoogle} style={{ height: 30, width: "100%" }} />
             </TouchableOpacity>
@@ -108,7 +98,9 @@ const Login = () => {
             </TouchableOpacity>
           </View>
         </ImageBackground>
-{/* } */}
+        {/* :
+       <Google/>
+      } */}
     </View>
   );
 }

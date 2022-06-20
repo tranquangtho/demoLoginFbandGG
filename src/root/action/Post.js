@@ -41,3 +41,9 @@ export const  newDelete =(add)=>{
         payload:add
     }
 }
+export const updatePosts=(add)=>{
+    return {
+        type:"UPDATE_POST",
+        payload:add
+    }
+}

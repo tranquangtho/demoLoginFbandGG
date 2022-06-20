@@ -14,7 +14,7 @@ export default function PostReducer(state = initialState, action) {
                 post: action.payload
             }
         case 'COMMENT':
-            console.log("Comment type123 :", action);
+            console.log("Comment type123 :", action.payload);
             return {
                 ...state,
                 post: action.payload
@@ -64,6 +64,12 @@ export default function PostReducer(state = initialState, action) {
                 }
             }
         //
+        // case "UPDATE_POST":{
+        //     return {
+        //         ...state,
+        //         post:action.payload
+        //     }
+        // }
         default:
             return state;
     }

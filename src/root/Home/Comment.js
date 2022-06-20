@@ -5,41 +5,41 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addComment } from '../action/Post'
 import { deleteComment } from '../action/Post'
-export default function Comment({ navigation,route }) {
+import { useRoute } from '@react-navigation/native'
+export default function Comment({ navigation }) {
   const dispatch = useDispatch()
+  const route =useRoute()
   const [modalVisible, setModalVisible] = useState(false);
   const [textComment, setTextComment] = useState("")
-  const [comment, setComment] = useState([])
+  // const [comment, setComment] = useState([])
 
   const onChangeText = (value => setTextComment(value))
 
-  const addPost = useSelector(state => state.add.post)
+  const posts = useSelector(state => state.add.post)
   const addUserName = useSelector(state => state.user.user)
-
+  // console.log(route);
   const handleComment = () => {
-    const newItem = {
+    const newItems = {
       id: Date.now(),
       time: Date.now(),
       textComment
     }
-    let newList=[...route.params.comment]
-    newList.push(newItem)
-    
-    console.log(newList);
-    console.log(addPost);
-    console.log(route);
+    let newList=[...route.params.comment,newItems]
+    navigation.setParams({
+      comment:newList
+    })
+    const updatePost=route.params.comment
+    updatePost.push(newList)
   }
-  // console.log("hello comment",comment);
-
-  
   const RenderItem = (props) => {
     const {item}=props
-      const deleteCommentB = () => {
-      const removePhotoId = item.id;
-      const value = comment.filter(a => a.id !== removePhotoId)
-      const action = deleteComment(value);
-      dispatch(action);
-    }
+    // console.log("item",item);
+    // const deleteCommentB = () => {
+    //     const params= route.params.comment
+    //   const removePhotoId = item.id;
+    //   const value = params.filter(a => a.id !== removePhotoId)
+      // const action = deleteComment(value);
+      // dispatch(action);
 
 
     return (
@@ -49,9 +49,9 @@ export default function Comment({ navigation,route }) {
             <Image source={{ uri: addUserName?.imageURL }} style={{ height: 36, width: 36, borderRadius: 50 }} />
             <Text style={{ color: "black", margin: 5, fontSize: 16 }}>{addUserName?.name}</Text>
           </View>
-          <TouchableOpacity onPress={deleteCommentB}>
+          {/* <TouchableOpacity >
             <Image source={icon.cancel} style={{ height: 20, width: 20, marginTop: 5 }} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={{ margin: 10 }}>
           <Text style={{ color: "black", margin: 5, fontSize: 14 }}>{textComment}</Text>
@@ -64,7 +64,7 @@ export default function Comment({ navigation,route }) {
       <View style={{ borderWidth: 0.5, marginTop: 5 }}></View>
 
       <View style={{ alignItems: "center", justifyContent: "center", margin: 5 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Google")}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={icon.cancel} style={{ height: 20, width: 20 }} />
           <Text>Thoát</Text>
         </TouchableOpacity>
@@ -74,7 +74,7 @@ export default function Comment({ navigation,route }) {
 
         <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
 
-          <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText} />
+          <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText}  value={textComment}/>
           <TouchableOpacity onPress={handleComment}>
             <Image source={icon.send} style={{ height: 50, width: 30 }} />
           </TouchableOpacity>
@@ -82,7 +82,7 @@ export default function Comment({ navigation,route }) {
         <FlatList
           data={route.params.comment}
           keyExtractor={item => item.id}
-          renderItem={({ item, index }) => <RenderItem addPost={addPost} item={item} index={index} />}
+          renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
         />
 
     </View>
