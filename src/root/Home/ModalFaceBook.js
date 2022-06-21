@@ -13,33 +13,35 @@ import { img } from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewPost } from '../action/Post';
+import { changePost } from '../reducer/PostReducer';
+
 const ModalFaceBook = props => {
-  const { addUserName, posts }= props
+  const { addUserName } = props
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
   // const comment=useSelector(state=>state)
   const onChangeText = val => setText(val);
   const [text, setText] = useState();
-
+  const {posts} = useSelector(state => state.post)
+  
 
   const handlePost = () => {
-    
+
     const newItem = {
       id: Date.now(),
       time: Date.now(),
       text,
-      isLike:false,
-      comment:[]
+      isLike: false,
+      comment: []
     }
-    const newList = [...posts,newItem]
-    dispatch(addNewPost(newList))
+    const newList = [...posts, newItem]
+    dispatch(changePost(newList))
     setModalVisible(!modalVisible)
 
-   }
+  }
 
-   
+
 
   return (
     <View style={styles.modal}>

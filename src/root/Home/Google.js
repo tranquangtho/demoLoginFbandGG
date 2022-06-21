@@ -19,55 +19,48 @@ import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewPost } from '../action/Post';
-import { addNewInfo } from '../action/user';
-import { newDelete } from '../action/Post';
-import { addNewLike } from '../action/Post';
-import { logOutUser } from '../action/user';
 import Comment from './Comment';
-
+import { changePost } from '../reducer/PostReducer';
+import produce from 'immer';
 const Google = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
-  const posts = useSelector(state => state.add.post)
-
-
-
-
+  const {posts}= useSelector(state => state.post)
+  // console.log(posts);
   const onLogOut = () => {
     dispatch(logOutUser(addUserName))
     navigation.navigate("Login")
     AsyncStorage.clear()
   }
 
-
   const ItemPost = ({ item, index }) => {
-    const [isLike, setIsLike] = useState(false)
+
     const [count, setCount] = useState(0)
-    // const route= useRoute()
+    const [isLike,setIsLike]=useState(false)
+
     const deleteData = () => {
       const removePhotoId = item.id;
       const value = posts.filter(a => a.id !== removePhotoId)
-      const action = newDelete(value);
+      const action = changePost(value);
       dispatch(action);
     }
-
-    const likeNewPost = (a) => {
-      let newPost = [...posts]
-      const indexItem = newPost.indexOf(item)
-      
-      if (isLike) {
-        setCount(isLike - 1)
-        newPost[indexItem].isLike =!isLike
-      } else {
-        setCount(isLike + 1)
-        newPost[indexItem].isLike =!isLike
+    const likeNewPost = (posts,draft =>{
+      if(isLike){
+        setCount(isLike -1)
+      }
+      else{
+        setCount(isLike+1)
       }
       setIsLike(!isLike)
-      console.log("posts:",newPost);
-    };
-
+      const index = posts.indexOf(item)
+      const updateLike = posts[index].isLike=!isLike 
+      const newPost =[...posts]
+      console.log("newPost: ",newPost);
+      // dispatch(changePost(newPost))
+      // dispatch()
+      // console.log(posts);
+    }) 
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -96,11 +89,11 @@ const Google = () => {
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
-            :
-            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
+             : 
+           <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
               <Image source={icon.blueLike} style={styles.like} />
               <Text style={{ fontSize: 16 }}>bo Thích</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> 
 
           }
 
@@ -122,7 +115,7 @@ const Google = () => {
       <TouchableOpacity onPress={onLogOut}>
         <Text>LogOut</Text>
       </TouchableOpacity>
-      <ModalFaceBook addUserName={addUserName} posts={posts} />
+      <ModalFaceBook addUserName={addUserName} />
       <FlatList
         data={posts}
         keyExtractor={item => item.id}

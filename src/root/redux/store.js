@@ -8,7 +8,8 @@ import { applyMiddleware } from 'redux';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  whileList:["user",]
+  whileList: ['user'],
+  // blacklist: ['post']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = configureStore({
@@ -17,6 +18,6 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
     }),
-},applyMiddleware)
+}, applyMiddleware)
 export const persistor = persistStore(store)
 export default store;

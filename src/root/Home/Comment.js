@@ -3,19 +3,17 @@ import React from 'react'
 import { img, icon } from '../../asset'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addComment } from '../action/Post'
-import { deleteComment } from '../action/Post'
 import { useRoute } from '@react-navigation/native'
 export default function Comment({ navigation }) {
   const dispatch = useDispatch()
-  const route =useRoute()
+  const route = useRoute()
   const [modalVisible, setModalVisible] = useState(false);
   const [textComment, setTextComment] = useState("")
-  // const [comment, setComment] = useState([])
 
   const onChangeText = (value => setTextComment(value))
 
-  const posts = useSelector(state => state.add.post)
+  const { posts } = useSelector(state => state.post)
+
   const addUserName = useSelector(state => state.user.user)
   // console.log(route);
   const handleComment = () => {
@@ -24,22 +22,27 @@ export default function Comment({ navigation }) {
       time: Date.now(),
       textComment
     }
-    let newList=[...route.params.comment,newItems]
+    let newList = [...route.params.comment, newItems]
     navigation.setParams({
-      comment:newList
+      comment: newList
     })
-    const updatePost=route.params.comment
-    updatePost.push(newList)
+
+    // console.log(newList);
+    // newList[indexItem].comment=
+    // const updatePost=route.params.comment
+    // updatePost.push(newList)
+    // console.log(newList);
+    // console.log(route.params.comment);
   }
   const RenderItem = (props) => {
-    const {item}=props
+    const { item } = props
     // console.log("item",item);
     // const deleteCommentB = () => {
     //     const params= route.params.comment
     //   const removePhotoId = item.id;
     //   const value = params.filter(a => a.id !== removePhotoId)
-      // const action = deleteComment(value);
-      // dispatch(action);
+    // const action = deleteComment(value);
+    // dispatch(action);
 
 
     return (
@@ -72,18 +75,18 @@ export default function Comment({ navigation }) {
       <View style={{ borderWidth: 0.5 }}></View>
 
 
-        <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
+      <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
 
-          <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText}  value={textComment}/>
-          <TouchableOpacity onPress={handleComment}>
-            <Image source={icon.send} style={{ height: 50, width: 30 }} />
-          </TouchableOpacity>
-        </View>
-        <FlatList
-          data={route.params.comment}
-          keyExtractor={item => item.id}
-          renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
-        />
+        <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText} value={textComment} />
+        <TouchableOpacity onPress={handleComment}>
+          <Image source={icon.send} style={{ height: 50, width: 30 }} />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        data={route.params.comment}
+        keyExtractor={item => item.id}
+        renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
+      />
 
     </View>
   )
