@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import produce from 'immer';
+
 const defaultState = {
     posts: [],
 }
@@ -9,18 +9,11 @@ const postSlice = createSlice({
     initialState: defaultState,
     reducers: {
         changePost: (state, action) => {
-            console.log("action.payload : " ,action.payload);
             return {
                 ...state,
                 posts: action.payload,
             }
         },
-        // changePost: (state, action) => {
-        //     console.log("action.payload : " ,action.payload);
-        //     return {
-        //         ...state,
-        //         posts: action.payload,
-        //     },
     }
 })
 

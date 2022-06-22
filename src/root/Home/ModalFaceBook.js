@@ -15,27 +15,27 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePost } from '../reducer/PostReducer';
 
-const ModalFaceBook = props => {
-  const { addUserName } = props
+const ModalFaceBook = (props) => {
+  const addUserName = useSelector(state => state.user.user)
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
   // const comment=useSelector(state=>state)
   const onChangeText = val => setText(val);
   const [text, setText] = useState();
-  const {posts} = useSelector(state => state.post)
-  
-
+  const { posts } = useSelector(state => state.post)
+;
   const handlePost = () => {
 
     const newItem = {
       id: Date.now(),
       time: Date.now(),
       text,
-      isLike: false,
-      comment: []
+      comment: [],
+      isLike: false
     }
     const newList = [...posts, newItem]
+    console.log("post :", newList);
     dispatch(changePost(newList))
     setModalVisible(!modalVisible)
 
@@ -49,7 +49,7 @@ const ModalFaceBook = props => {
         <View>
           <View style={{ flexDirection: 'row', marginTop: 10 }}>
             <Image source={{ uri: addUserName?.imageURL }} style={styles.avatar} />
-            <Text style={{ color: 'black', fontSize: 20 }}>{addUserName.name}</Text>
+            <Text style={{ color: 'black', fontSize: 20 }}>{addUserName?.name}</Text>
           </View>
           <Pressable style={{ backgroundColor: '#f9ffb1' }}>
             <TextInput
@@ -76,7 +76,7 @@ const ModalFaceBook = props => {
         </View>
       </Modal>
       <View style={{ flexDirection: "row", height: 50, alignItems: "center", paddingLeft: 10, backgroundColor: "white" }}>
-        <Image source={{ uri: addUserName.imageURL }} style={{ height: 35, width: 35, marginRight: 20, borderRadius: 50 }} />
+        <Image source={{ uri: addUserName?.imageURL }} style={{ height: 35, width: 35, marginRight: 20, borderRadius: 50 }} />
         <Pressable onPress={() => setModalVisible(true)} style={{ borderWidth: 1, width: "70%", height: 35, borderRadius: 30, justifyContent: "center" }} >
           <Text style={{ marginLeft: 20 }}>bạn đang nghĩ gì</Text>
         </Pressable>

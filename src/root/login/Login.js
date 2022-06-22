@@ -18,8 +18,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewUSer } from '../action/user';
 import Google from '../Home/Google';
+import { changePost } from '../reducer/PostReducer';
+import { LoginUser,LogOutUser } from '../reducer/UserReducer';
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
@@ -34,7 +35,8 @@ const Login = () => {
   // const [info,setInfo]=useState(null)
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  const dataUser = useSelector(state => state.user.user)
+  const dataUser = useSelector(state => state.user.posts)
+  console.log("dataUser",dataUser);
 
 
 
@@ -64,7 +66,7 @@ const Login = () => {
       } else {
         console.log("Login success with permissions:");
         await Profile.getCurrentProfile().then(async (data) => {
-          const action = addNewUSer(data)
+          const action = LoginUser(data)
           dispatch(action)
           navigation.navigate("Google")
         }
@@ -77,8 +79,10 @@ const Login = () => {
   };
   return (
     <View>
-      {/* {dataUser != null
-        ? */}
+      {dataUser != undefined
+        ? 
+       <Google dataUser={dataUser} />
+        :
         <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center" }}>
           <View style={styles.taiKhoan}>
             <Image source={img.user} style={{ height: 30, width: 30 }} />
@@ -98,9 +102,7 @@ const Login = () => {
             </TouchableOpacity>
           </View>
         </ImageBackground>
-        {/* :
-       <Google/>
-      } */}
+      }
     </View>
   );
 }
