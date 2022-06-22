@@ -21,23 +21,26 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
 import { changePost } from '../reducer/PostReducer';
-import produce from 'immer';
-const Google = () => {
+import { LoginUser, LogOutUser } from '../reducer/UserReducer';
+
+const Google = (props) => {
+
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
-  const {posts}= useSelector(state => state.post)
-  // console.log(posts);
+  const { posts } = useSelector(state => state.post)
+  const [data, setData] = useState()
+
   const onLogOut = () => {
-    dispatch(logOutUser(addUserName))
-    navigation.navigate("Login")
     AsyncStorage.clear()
+    dispatch(LogOutUser(addUserName))
+    navigation.navigate("Login")
   }
 
   const ItemPost = ({ item, index }) => {
 
     const [count, setCount] = useState(0)
-    const [isLike,setIsLike]=useState(false)
+    const [isLike, setIsLike] = useState(false)
 
     const deleteData = () => {
       const removePhotoId = item.id;
@@ -45,22 +48,24 @@ const Google = () => {
       const action = changePost(value);
       dispatch(action);
     }
-    const likeNewPost = (posts,draft =>{
-      if(isLike){
-        setCount(isLike -1)
-      }
-      else{
-        setCount(isLike+1)
-      }
-      setIsLike(!isLike)
+    const likeNewPost = () => {
+      const originalPost = JSON.parse(JSON.stringify(posts));
       const index = posts.indexOf(item)
-      const updateLike = posts[index].isLike=!isLike 
-      const newPost =[...posts]
-      console.log("newPost: ",newPost);
-      // dispatch(changePost(newPost))
-      // dispatch()
-      // console.log(posts);
-    }) 
+      if (isLike) {
+        setCount(isLike - 1)
+        setIsLike(false)
+        originalPost[index].isLike = false
+      }
+      else {
+        setCount(isLike + 1)
+        setIsLike(true)
+        originalPost[index].isLike = true
+      }
+      const newPost = JSON.parse(JSON.stringify(originalPost));
+      setData(newPost)
+      // dispatch(changePost(originalPost))
+    }
+
     return (
       <View style={styles.posts}>
         <View style={styles.info}>
@@ -89,11 +94,11 @@ const Google = () => {
               <Image source={icon.like} style={styles.like} />
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
-             : 
-           <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
+            :
+            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
               <Image source={icon.blueLike} style={styles.like} />
               <Text style={{ fontSize: 16 }}>bo Thích</Text>
-            </TouchableOpacity> 
+            </TouchableOpacity>
 
           }
 
