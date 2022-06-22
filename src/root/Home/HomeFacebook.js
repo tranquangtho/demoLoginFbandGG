@@ -16,27 +16,26 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { img, icon } from '../../asset';
-import ModalFaceBook from './ModalFaceBook';
+import PostFacebook from './post';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
-import { changePost } from '../reducer/PostReducer';
-import { LoginUser, LogOutUser } from '../reducer/UserReducer';
-
-const Google = (props) => {
+import { logOutFacebook } from '../action/userFacebook';
+import { deletePost,LikePost,PostNew } from '../action/postFacebook';
+const HomeFacebook= (props) => {
 
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
-  const { posts } = useSelector(state => state.post)
+  const posts = useSelector(state => state.post.post)
   const [data, setData] = useState()
+
 
   const onLogOut = () => {
     AsyncStorage.clear()
-    dispatch(LogOutUser(addUserName))
+    dispatch(logOutFacebook(addUserName))
     navigation.navigate("Login")
   }
-  console.log(data);
 
   const ItemPost = ({ item, index }) => {
 
@@ -46,26 +45,23 @@ const Google = (props) => {
     const deleteData = () => {
       const removePhotoId = item.id;
       const value = posts.filter(a => a.id !== removePhotoId)
-      const action = changePost(value);
+      const action = deletePost(value);
       dispatch(action);
     }
     const likeNewPost = () => {
-      const originalPost = JSON.parse(JSON.stringify(posts));
       const index = posts.indexOf(item)
       if (isLike) {
         setCount(isLike - 1)
-        setIsLike(false)
-        originalPost[index].isLike = false
+        posts[index].isLike = !isLike
+
       }
       else {
         setCount(isLike + 1)
-        setIsLike(true)
-        originalPost[index].isLike = true
+        posts[index].isLike = !isLike
       }
-      const newPost = JSON.parse(JSON.stringify(originalPost));
-      setData(newPost)
-      // dispatch(changePost(originalPost))
+      setIsLike(!isLike)
     }
+
 
     return (
       <View style={styles.posts}>
@@ -121,7 +117,7 @@ const Google = (props) => {
       <TouchableOpacity onPress={onLogOut}>
         <Text>LogOut</Text>
       </TouchableOpacity>
-      <ModalFaceBook addUserName={addUserName} />
+      <HomeFacebook addUserName={addUserName} />
       <FlatList
         data={posts}
         keyExtractor={item => item.id}
@@ -210,4 +206,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-export default Google;
+export default HomeFacebook;

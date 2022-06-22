@@ -18,9 +18,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import Google from '../Home/Google';
-import { changePost } from '../reducer/PostReducer';
-import { LoginUser,LogOutUser } from '../reducer/UserReducer';
+import HomeFacebook from '../Home/HomeFacebook';
+import { loginFacebook,logOutFacebook } from '../action/userFacebook';
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
@@ -66,9 +65,9 @@ const Login = () => {
       } else {
         console.log("Login success with permissions:");
         await Profile.getCurrentProfile().then(async (data) => {
-          const action = LoginUser(data)
+          const action = loginFacebook(data)
           dispatch(action)
-          navigation.navigate("Google")
+          navigation.navigate("HomeFacebook")
         }
         )
       }
@@ -78,12 +77,12 @@ const Login = () => {
     )
   };
   return (
-    <View>
+    <View style={{height:"100%"}}>
       {dataUser != undefined
         ? 
        <Google dataUser={dataUser} />
         :
-        <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center" }}>
+        <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center"}}>
           <View style={styles.taiKhoan}>
             <Image source={img.user} style={{ height: 30, width: 30 }} />
             <TextInput placeholder='UserName' />

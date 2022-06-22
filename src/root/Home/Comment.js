@@ -12,7 +12,7 @@ export default function Comment({ navigation }) {
 
   const onChangeText = (value => setTextComment(value))
 
-  const { posts } = useSelector(state => state.post)
+  const  posts  = useSelector(state => state.post.pot)
 
   const addUserName = useSelector(state => state.user.user)
   // console.log(route);

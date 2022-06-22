@@ -13,9 +13,9 @@ import { img } from '../../asset';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { changePost } from '../reducer/PostReducer';
+import { PostNew } from '../action/postFacebook';
 
-const ModalFaceBook = (props) => {
+const PostFacebook = (props) => {
   const addUserName = useSelector(state => state.user.user)
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,7 +23,7 @@ const ModalFaceBook = (props) => {
   // const comment=useSelector(state=>state)
   const onChangeText = val => setText(val);
   const [text, setText] = useState();
-  const { posts } = useSelector(state => state.post)
+  const posts = useSelector(state => state.post.post)
 ;
   const handlePost = () => {
 
@@ -35,8 +35,7 @@ const ModalFaceBook = (props) => {
       isLike: false
     }
     const newList = [...posts, newItem]
-    console.log("post :", newList);
-    dispatch(changePost(newList))
+    dispatch(PostNew(newList))
     setModalVisible(!modalVisible)
 
   }
@@ -95,4 +94,4 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
-export default ModalFaceBook;
+export default PostFacebook;

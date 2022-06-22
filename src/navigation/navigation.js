@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FaceBook from '../root/Home/ModalFaceBook';
-import Google from '../root/Home/Google';
+import FaceBook from '../root/Home/post';
+import HomeFacebook from '../root/Home/HomeFacebook';
 import Login from '../root/login/Login';
 import React from 'react';
-import ModalFaceBook from '../root/Home/ModalFaceBook';
+import PostFacebook from '../root/Home/post';
 import Comment from '../root/Home/Comment';
 const MainStack = createNativeStackNavigator()
 
@@ -11,8 +11,8 @@ const MainStack = createNativeStackNavigator()
   return (
       <MainStack.Navigator screenOptions={{headerShown: false }}>
         <MainStack.Screen name="Login" component={Login} />
-        <MainStack.Screen name="Google" component={Google} />
-        <MainStack.Screen name="FaceBook" component={ModalFaceBook} />
+        <MainStack.Screen name="HomeFacebook" component={HomeFacebook} />
+        <MainStack.Screen name="PostFacebook" component={PostFacebook} />
         <MainStack.Screen name="Comment" component={Comment} />
       </MainStack.Navigator>
   );

@@ -4,9 +4,6 @@ import rootReducer from './redux'
 import { configureStore } from '@reduxjs/toolkit'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { applyMiddleware } from 'redux';
-import { setAutoFreeze } from 'immer';
-
-setAutoFreeze(false);
 
 const persistConfig = {
   key: 'root',
