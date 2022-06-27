@@ -4,30 +4,32 @@ import { img, icon } from '../../asset'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
+import { updateComment } from '../reducer/PostReducer'
+import Google from './Google'
 export default function Comment({ navigation }) {
   const dispatch = useDispatch()
   const route = useRoute()
   const [modalVisible, setModalVisible] = useState(false);
   const [textComment, setTextComment] = useState("")
 
-  const onChangeText = (value => setTextComment(value))
+  const onChangeText = value => setTextComment(value)
 
   const { posts } = useSelector(state => state.post)
 
   const addUserName = useSelector(state => state.user.user)
-  // console.log(route);
-  const [comment,setComment]=useState("")
+  const [comment,setComment]=useState([])
   const handleComment = () => {
     const newItems = {
       id: Date.now(),
       time: Date.now(),
       textComment
     }
-    let newList = [...comment, newItems]
+    const newList = [...comment, newItems]
     navigation.setParams({
       comment: newList
     })
     setComment(newList)
+    console.log(route);
   }
   const RenderItem = (props) => {
     const { item } = props
@@ -62,7 +64,7 @@ export default function Comment({ navigation }) {
       <View style={{ borderWidth: 0.5, marginTop: 5 }}></View>
 
       <View style={{ alignItems: "center", justifyContent: "center", margin: 5 }}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.navigate("Google",route.params)}>
           <Image source={icon.cancel} style={{ height: 20, width: 20 }} />
           <Text>Thoát</Text>
         </TouchableOpacity>
@@ -72,13 +74,13 @@ export default function Comment({ navigation }) {
 
       <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
 
-        <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText()} value={textComment} />
+        <TextInput style={{ width: "90%" }} placeholder="Comment"   onChangeText={setTextComment} value={textComment}/>
         <TouchableOpacity onPress={handleComment}>
           <Image source={icon.send} style={{ height: 50, width: 30 }} />
         </TouchableOpacity>
       </View>
       <FlatList
-        data={comment}
+        data={posts}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
       />

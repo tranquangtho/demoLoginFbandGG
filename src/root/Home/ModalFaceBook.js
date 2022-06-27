@@ -24,8 +24,8 @@ const ModalFaceBook = props => {
   // const comment=useSelector(state=>state)
   const onChangeText = val => setText(val);
   const [text, setText] = useState();
-  const {posts} = useSelector(state => state.post)
-  
+  const [data, setData] = useState([])
+
 
   const handlePost = () => {
 
@@ -36,10 +36,10 @@ const ModalFaceBook = props => {
       isLike: false,
       comment: []
     }
-    const newList = [...posts, newItem]
+    const newList = [...data, newItem]
+    setData(data)
     dispatch(changePost(newList))
     setModalVisible(!modalVisible)
-
   }
  
 

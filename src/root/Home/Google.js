@@ -20,9 +20,9 @@ import ModalFaceBook from './ModalFaceBook';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
-import { changePost } from '../reducer/PostReducer';
+import { changePost,updatePost } from '../reducer/PostReducer';
 import { userLogout } from '../reducer/itemReducer';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import produce from 'immer'
 const Google = (props) => {
 
@@ -30,22 +30,12 @@ const Google = (props) => {
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
   const { posts } = useSelector(state => state.post)
-  const [data, setData] = useState()
-  useEffect(() => {
-    setData(posts)
-  },[])
-
-  useEffect(() => {
-    dispatch(changePost(data))
-  }, [data])
-
-
-
   const ItemPost = ({item,index}) => {
        
     const [isLike, setIsLike] = useState(item.isLike)
   const [count, setCount] = useState(0)
-
+  // const originalPost = posts.slice();
+    // console.log(originalPost);
 
     const deleteData = () => {
       const removePhotoId = item.id;
@@ -54,40 +44,35 @@ const Google = (props) => {
       dispatch(action);
     }
 
-    const likeNewPost =produce (posts,(draft) => {
-      let originalPost = data.slice();
+    const likeNewPost =  ()=> {
+  const originalPost = posts.slice();
       const index = originalPost.indexOf(item)
-      const newList =[...posts]
+      
       if (isLike) {
-        originalPost.splice(index, 1, ({
-          "comment": item.comment,
-          "id": item.id,
-          "isLike": false,
-          "text": item.text,
-          "time": item.time
+        originalPost.splice(index,1,({
+          comment:item.comment,
+          id:item.id,
+          isLike:false,
+          text:item.text,
+          time:item.time
         }))
-      setData(originalPost)
-        // setCount(isLike- 1)
-        // draft[index].isLike=!isLike
+        setCount(isLike - 1)
         }
       else {
-        originalPost.splice(index, 1, ({
-          "comment": item.comment,
-          "id": item.id,
-          "isLike": true,
-          "text": item.text,
-          "time": item.time
+        originalPost.splice(index,1,({
+          comment:item.comment,
+          id:item.id,
+          isLike:true,
+          text:item.text,
+          time:item.time
         }))
-      setData(originalPost)
-      // setCount(isLike + 1)
-      // draft[index].isLike=!isLike
-
+        setCount(isLike + 1)
       }
+      // setData(originalPost)
       setIsLike(!isLike)
-      
-      console.log("count",posts);
+      const newList =[...originalPost]
+      dispatch(changePost(newList))
     }
-    )
 
     return (
       <View style={styles.posts}>
@@ -115,23 +100,22 @@ const Google = (props) => {
             ?
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={likeNewPost}  >
               {/* <Icon name={"fa-solid fa-thumbs-up"} style={styles.like} /> */}
-              <Icon name={"add-circle-outline"}  size={30}/>
+              <Icon name={"thumbs-up"}  size={30} color="black"/>
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
             :
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
-              <Icon source={icon.blueLike} style={styles.like} />
-              <Text style={{ fontSize: 16 }}>bo Thích</Text>
+              <Icon name={"thumbs-up"} size={30} color="blue" />
+              <Text style={{ fontSize: 16 }}>Bỏ Thích</Text>
             </TouchableOpacity>
           }
-
-          <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Comment", item)}>
-            <Image source={icon.comment} style={{ height: 24, width: 26 }} />
-            <Text>bình luận</Text>
+          <TouchableOpacity style={{ flexDirection: "row",alignItems:"center" }} onPress={() => navigation.navigate("Comment",item)}>
+            <Icon name={"comment"} size={30} color="black"  />
+            <Text style={{fontSize:16}}>Bình luận</Text>
           </TouchableOpacity>
-          <View style={{ flexDirection: "row" }}>
-            <Image source={icon.cancel} style={{ height: 20, width: 20, marginRight: 5 }} />
-            <Text style={{ fontSize: 18 }}>Chia Sẻ</Text>
+          <View style={{ flexDirection: "row",alignItems:"center"  }}>
+          <Icon name={"share-square"} size={26} color="black"  />
+            <Text style={{ fontSize: 16 , }}>Chia Sẻ</Text>
           </View> 
         </View>
       </View>
@@ -142,7 +126,7 @@ const Google = (props) => {
     <ImageBackground source={img.groundRd} style={{ backgroundColor: "#bec2b8", height: "100%" }}>
       <ModalFaceBook addUserName={addUserName} />
       <FlatList
-        data={data}
+        data={posts}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
       />
@@ -181,9 +165,10 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   posts: {
-    margin: 10,
-    borderRadius: 10,
-    borderWidth: 2,
+    marginBottom: 10,
+    marginTop: 2,
+    // borderRadius: 10,
+    borderWidth: 0.5,
     backgroundColor: "white",
 
   },
