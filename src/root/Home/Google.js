@@ -17,12 +17,13 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
 import { changePost } from '../reducer/PostReducer';
-import { LoginUser, LogOutUser } from '../reducer/UserReducer';
-
+import { userLogout } from '../reducer/itemReducer';
+import Icon from 'react-native-vector-icons/Ionicons';
+import produce from 'immer'
 const Google = (props) => {
 
   const navigation = useNavigation();
@@ -30,17 +31,21 @@ const Google = (props) => {
   const addUserName = useSelector(state => state.user.user)
   const { posts } = useSelector(state => state.post)
   const [data, setData] = useState()
+  useEffect(() => {
+    setData(posts)
+  },[])
 
-  const onLogOut = () => {
-    AsyncStorage.clear()
-    dispatch(LogOutUser(addUserName))
-    navigation.navigate("Login")
-  }
+  useEffect(() => {
+    dispatch(changePost(data))
+  }, [data])
 
-  const ItemPost = ({ item, index }) => {
 
-    const [count, setCount] = useState(0)
-    const [isLike, setIsLike] = useState(false)
+
+  const ItemPost = ({item,index}) => {
+       
+    const [isLike, setIsLike] = useState(item.isLike)
+  const [count, setCount] = useState(0)
+
 
     const deleteData = () => {
       const removePhotoId = item.id;
@@ -48,23 +53,41 @@ const Google = (props) => {
       const action = changePost(value);
       dispatch(action);
     }
-    const likeNewPost = () => {
-      const originalPost = JSON.parse(JSON.stringify(posts));
-      const index = posts.indexOf(item)
+
+    const likeNewPost =produce (posts,(draft) => {
+      let originalPost = data.slice();
+      const index = originalPost.indexOf(item)
+      const newList =[...posts]
       if (isLike) {
-        setCount(isLike - 1)
-        setIsLike(false)
-        originalPost[index].isLike = false
-      }
+        originalPost.splice(index, 1, ({
+          "comment": item.comment,
+          "id": item.id,
+          "isLike": false,
+          "text": item.text,
+          "time": item.time
+        }))
+      setData(originalPost)
+        // setCount(isLike- 1)
+        // draft[index].isLike=!isLike
+        }
       else {
-        setCount(isLike + 1)
-        setIsLike(true)
-        originalPost[index].isLike = true
+        originalPost.splice(index, 1, ({
+          "comment": item.comment,
+          "id": item.id,
+          "isLike": true,
+          "text": item.text,
+          "time": item.time
+        }))
+      setData(originalPost)
+      // setCount(isLike + 1)
+      // draft[index].isLike=!isLike
+
       }
-      const newPost = JSON.parse(JSON.stringify(originalPost));
-      setData(newPost)
-      // dispatch(changePost(originalPost))
+      setIsLike(!isLike)
+      
+      console.log("count",posts);
     }
+    )
 
     return (
       <View style={styles.posts}>
@@ -91,15 +114,15 @@ const Google = (props) => {
           {!isLike
             ?
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={likeNewPost}  >
-              <Image source={icon.like} style={styles.like} />
+              {/* <Icon name={"fa-solid fa-thumbs-up"} style={styles.like} /> */}
+              <Icon name={"add-circle-outline"}  size={30}/>
               <Text style={{ fontSize: 16 }}>thích</Text>
             </TouchableOpacity>
             :
             <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }} onPress={likeNewPost} >
-              <Image source={icon.blueLike} style={styles.like} />
+              <Icon source={icon.blueLike} style={styles.like} />
               <Text style={{ fontSize: 16 }}>bo Thích</Text>
             </TouchableOpacity>
-
           }
 
           <TouchableOpacity style={{ flexDirection: "row" }} onPress={() => navigation.navigate("Comment", item)}>
@@ -109,24 +132,21 @@ const Google = (props) => {
           <View style={{ flexDirection: "row" }}>
             <Image source={icon.cancel} style={{ height: 20, width: 20, marginRight: 5 }} />
             <Text style={{ fontSize: 18 }}>Chia Sẻ</Text>
-          </View>
+          </View> 
         </View>
       </View>
     )
   }
 
   return (
-    <View style={{ backgroundColor: "#bec2b8", height: "100%" }}>
-      <TouchableOpacity onPress={onLogOut}>
-        <Text>LogOut</Text>
-      </TouchableOpacity>
+    <ImageBackground source={img.groundRd} style={{ backgroundColor: "#bec2b8", height: "100%" }}>
       <ModalFaceBook addUserName={addUserName} />
       <FlatList
-        data={posts}
+        data={data}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
       />
-    </View>
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({

@@ -20,6 +20,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewUSer } from '../action/user';
 import Google from '../Home/Google';
+import { userLogin } from '../reducer/itemReducer'
+
 GoogleSignin.configure({
   webClientId:
     '523744039059-p5i2loh7uvttovmckpos22f0fc5r63nl.apps.googleusercontent.com',
@@ -39,23 +41,23 @@ const Login = () => {
 
 
   const onGoogleButtonPress = async () => {
-    // Get the users ID token
-    const { idToken } = await GoogleSignin.signIn();
-    // console.log(idToken)
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    // // Get the users ID token
+    // const { idToken } = await GoogleSignin.signIn();
+    // // console.log(idToken)
+    // // Create a Google credential with the token
+    // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-    // Sign-in the user with the credential
-    const userSingIn = auth().signInWithCredential(googleCredential);
-    userSingIn.then(async (value) => {
-      try {
-        const jsonValue = JSON.stringify(value)
-        await AsyncStorage.setItem("@UserName", jsonValue)
-        navigation.navigate("Google")
-      } catch (error) {
-        console.log(error);
-      }
-    })
+    // // Sign-in the user with the credential
+    // const userSingIn = auth().signInWithCredential(googleCredential);
+    // userSingIn.then(async (value) => {
+    //   try {
+    //     const jsonValue = JSON.stringify(value)
+    //     await AsyncStorage.setItem("@UserName", jsonValue)
+    //     navigation.navigate("Google")
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // })
   };
   const LoginFb = () => {
     LoginManager.logInWithPermissions(["public_profile"]).then(async (result) => {
@@ -64,9 +66,9 @@ const Login = () => {
       } else {
         console.log("Login success with permissions:");
         await Profile.getCurrentProfile().then(async (data) => {
-          const action = addNewUSer(data)
-          dispatch(action)
-          navigation.navigate("Google")
+          // const action = addNewUSer(data)
+          dispatch(userLogin(data))
+          navigation.navigate("HomeFb")
         }
         )
       }
@@ -79,26 +81,26 @@ const Login = () => {
     <View>
       {/* {dataUser != null
         ? */}
-        <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center" }}>
-          <View style={styles.taiKhoan}>
-            <Image source={img.user} style={{ height: 30, width: 30 }} />
-            <TextInput placeholder='UserName' />
-          </View>
-          <View style={styles.matKhau}>
-            <Image source={img.lock} style={{ height: 30, width: 30 }} />
+      <ImageBackground source={img.imgLogin2} style={{ justifyContent: "center" }}>
+        <View style={styles.taiKhoan}>
+          <Image source={img.user} style={{ height: 30, width: 30 }} />
+          <TextInput placeholder='UserName' />
+        </View>
+        <View style={styles.matKhau}>
+          <Image source={img.lock} style={{ height: 30, width: 30 }} />
 
-            <TextInput placeholder='PassWord' />
-          </View>
-          <View>
-            <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
-              <Image source={img.imageGoogle} style={{ height: 30, width: "100%" }} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={LoginFb} style={styles.LoginFb}>
-              <Image source={img.imageFacebook} style={{ height: 30, width: "100%" }} resizeMode='cover' />
-            </TouchableOpacity>
-          </View>
-        </ImageBackground>
-        {/* :
+          <TextInput placeholder='PassWord' />
+        </View>
+        <View>
+          <TouchableOpacity onPress={onGoogleButtonPress} style={styles.LoginGG}>
+            <Image source={img.imageGoogle} style={{ height: 30, width: "100%" }} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={LoginFb} style={styles.LoginFb}>
+            <Image source={img.imageFacebook} style={{ height: 30, width: "100%" }} resizeMode='cover' />
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+      {/* :
        <Google/>
       } */}
     </View>

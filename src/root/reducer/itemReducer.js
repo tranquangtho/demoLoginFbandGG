@@ -1,23 +1,33 @@
-const initialState = {
-    user: {},
-    activeId:null
-};
-export default function itemReducer(state = initialState, action) {
+import { createSlice } from '@reduxjs/toolkit'
 
-    switch (action.type) {
-        case 'User_Login':
-            console.log("action.payload:",action.payload);
+const defaultState = {
+    user: {},
+    activeId: null
+}
+
+const userSlice = createSlice({
+    name: 'post',
+    initialState: defaultState,
+    reducers: {
+        userLogin: (state, action) => {
             return {
                 ...state,
-                user:action.payload           
+                user: action.payload
             }
-        case 'LOG_OUT':
-            // console.log("user_name:", action.data.name);
+        },
+        userLogout: (state, action) => {
             return {
-                user:{}
+                ...state,
+                user: {}
             }
+        },
 
-        default:
-            return state;
     }
-}
+})
+
+export const {
+    userLogin, userLogout
+} = userSlice.actions
+
+export const userReducer = userSlice.reducer;
+

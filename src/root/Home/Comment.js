@@ -16,23 +16,18 @@ export default function Comment({ navigation }) {
 
   const addUserName = useSelector(state => state.user.user)
   // console.log(route);
+  const [comment,setComment]=useState("")
   const handleComment = () => {
     const newItems = {
       id: Date.now(),
       time: Date.now(),
       textComment
     }
-    let newList = [...route.params.comment, newItems]
+    let newList = [...comment, newItems]
     navigation.setParams({
       comment: newList
     })
-
-    // console.log(newList);
-    // newList[indexItem].comment=
-    // const updatePost=route.params.comment
-    // updatePost.push(newList)
-    // console.log(newList);
-    // console.log(route.params.comment);
+    setComment(newList)
   }
   const RenderItem = (props) => {
     const { item } = props
@@ -77,13 +72,13 @@ export default function Comment({ navigation }) {
 
       <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
 
-        <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText} value={textComment} />
+        <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={onChangeText()} value={textComment} />
         <TouchableOpacity onPress={handleComment}>
           <Image source={icon.send} style={{ height: 50, width: 30 }} />
         </TouchableOpacity>
       </View>
       <FlatList
-        data={route.params.comment}
+        data={comment}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
       />

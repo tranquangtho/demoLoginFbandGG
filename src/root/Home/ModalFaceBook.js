@@ -1,3 +1,4 @@
+
 import {
   View,
   Text,
@@ -40,6 +41,7 @@ const ModalFaceBook = props => {
     setModalVisible(!modalVisible)
 
   }
+ 
 
 
 
@@ -87,7 +89,7 @@ const ModalFaceBook = props => {
 const styles = StyleSheet.create({
   modal: {
     borderWidth: 0.5,
-    marginTop: 10
+    // marginTop: 10
   },
   avatar: {
     height: 50,

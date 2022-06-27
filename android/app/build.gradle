@@ -84,6 +84,11 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
+// project.ext.vectoricons = [
+//     iconFontNames: [ 'MaterialIcons.ttf'] // Name of the font files you want to copy
+// ]
+
+// apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -264,6 +269,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation platform('com.google.firebase:firebase-bom:30.0.1')
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(':react-native-vector-icons')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
