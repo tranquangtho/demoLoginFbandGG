@@ -17,7 +17,7 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
 import { changePost,updatePost } from '../reducer/PostReducer';
@@ -25,38 +25,39 @@ import { userLogout } from '../reducer/itemReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import produce from 'immer'
 const Google = (props) => {
-
+  const route= useRoute()
+  console.log("route",route.params);
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
+  console.log(" addUserName :",addUserName);
   const { posts } = useSelector(state => state.post)
   const ItemPost = ({item,index}) => {
        
     const [isLike, setIsLike] = useState(item.isLike)
-  const [count, setCount] = useState(0)
   // const originalPost = posts.slice();
     // console.log(originalPost);
 
     const deleteData = () => {
       const removePhotoId = item.id;
       const value = posts.filter(a => a.id !== removePhotoId)
+      console.log("Value     sss : ", value);
       const action = changePost(value);
       dispatch(action);
     }
 
     const likeNewPost =  ()=> {
-  const originalPost = posts.slice();
-      const index = originalPost.indexOf(item)
-      
+  const originalPost = [...posts]
+      const index = originalPost.indexOf(item)      
       if (isLike) {
         originalPost.splice(index,1,({
           comment:item.comment,
           id:item.id,
           isLike:false,
           text:item.text,
-          time:item.time
+          time:item.time,
+          count:0
         }))
-        setCount(isLike - 1)
         }
       else {
         originalPost.splice(index,1,({
@@ -64,14 +65,13 @@ const Google = (props) => {
           id:item.id,
           isLike:true,
           text:item.text,
-          time:item.time
+          time:item.time,
+          count:1
         }))
-        setCount(isLike + 1)
       }
-      // setData(originalPost)
       setIsLike(!isLike)
-      const newList =[...originalPost]
-      dispatch(changePost(newList))
+      // console.log("originalPost : ",originalPost);
+      dispatch(changePost(originalPost))
     }
 
     return (
@@ -93,7 +93,7 @@ const Google = (props) => {
           <Text style={{ fontSize: 16, color: "black" }}>{item.text}</Text>
         </View>
         <View style={{ margin: 10 }}>
-          <Text>{count}</Text>
+          <Text>{item.count}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "space-around", borderTopWidth: 0.4, padding: 10 }}>
           {!isLike

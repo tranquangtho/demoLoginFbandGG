@@ -4,85 +4,85 @@ import { img, icon } from '../../asset'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
-import { updateComment } from '../reducer/PostReducer'
+import { changePost, updateComment, deleteComment } from '../reducer/PostReducer'
 import Google from './Google'
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 export default function Comment({ navigation }) {
   const dispatch = useDispatch()
   const route = useRoute()
   const [modalVisible, setModalVisible] = useState(false);
   const [textComment, setTextComment] = useState("")
-
   const onChangeText = value => setTextComment(value)
-
   const { posts } = useSelector(state => state.post)
-
   const addUserName = useSelector(state => state.user.user)
-  const [comment,setComment]=useState([])
+  const [comment, setComment] = useState([])
+
+  const DATA = route.params.comment
+  console.log("DATA :", DATA);
+  
+  const dataRoute = [route.params]
+
   const handleComment = () => {
     const newItems = {
       id: Date.now(),
       time: Date.now(),
-      textComment
+      text:textComment
     }
-    const newList = [...comment, newItems]
+    const newList = [...route.params.comment, newItems]
     navigation.setParams({
       comment: newList
     })
+    setTextComment("")
+
     setComment(newList)
-    console.log(route);
+    // console.log(route);
+    // console.log(dataRoute);
+    dispatch(changePost(dataRoute))
   }
   const RenderItem = (props) => {
     const { item } = props
-    // console.log("item",item);
     // const deleteCommentB = () => {
-    //     const params= route.params.comment
-    //   const removePhotoId = item.id;
-    //   const value = params.filter(a => a.id !== removePhotoId)
-    // const action = deleteComment(value);
-    // dispatch(action);
+    //   const value = DATA.filter(a => a.id !== item.id)
 
+    // console.log("item",item);
+    // console.log("value : ",value);
+    // dispatch(deleteComment(dataRoute));
+    // }
 
     return (
-      <View style={{ borderWidth: 2, margin: 10, borderRadius: 10 }}>
-        <View style={{ margin: 10, flexDirection: "row", justifyContent: "space-between" }}>
+      <View >
+        <View style={{ margin: 10, flexDirection: "row"}}>
           <View style={{ flexDirection: "row" }}>
-            <Image source={{ uri: addUserName?.imageURL }} style={{ height: 36, width: 36, borderRadius: 50 }} />
-            <Text style={{ color: "black", margin: 5, fontSize: 16 }}>{addUserName?.name}</Text>
+            <Image source={{ uri: addUserName?.imageURL }} style={{ height: 40, width: 40, borderRadius: 50 }} />
           </View>
-          {/* <TouchableOpacity >
-            <Image source={icon.cancel} style={{ height: 20, width: 20, marginTop: 5 }} />
-          </TouchableOpacity> */}
+          <View style={{ backgroundColor:"#e4e9ef",borderRadius:16,width:"90%" }}>
+            <Text style={{ color: "black", margin: 5, fontSize: 16 }}>{addUserName?.name}</Text>
+            <Text style={{ color: "black", margin: 5, fontSize: 14 }}>{item.text}</Text>
+          </View>
         </View>
-        <View style={{ margin: 10 }}>
-          <Text style={{ color: "black", margin: 5, fontSize: 14 }}>{textComment}</Text>
-        </View>
+
       </View>
     )
   }
   return (
     <View style={{ height: "100%", width: "100%" }}>
-      <View style={{ borderWidth: 0.5, marginTop: 5 }}></View>
-
-      <View style={{ alignItems: "center", justifyContent: "center", margin: 5 }}>
-        <TouchableOpacity onPress={() => navigation.navigate("Google",route.params)}>
-          <Image source={icon.cancel} style={{ height: 20, width: 20 }} />
-          <Text>Thoát</Text>
+      <View style={{ marginBottom: 10 }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 10 }} >
+          <Icon name={"arrow-left"} size={26} color="black" />
         </TouchableOpacity>
+        {/* <Icon name={"thumbs-up"} size={28}/> */}
       </View>
-      <View style={{ borderWidth: 0.5 }}></View>
-
-
       <View style={{ borderWidth: 1, margin: 10, flexDirection: "row" }}>
-
-        <TextInput style={{ width: "90%" }} placeholder="Comment"   onChangeText={setTextComment} value={textComment}/>
+        <TextInput style={{ width: "90%" }} placeholder="Comment" onChangeText={setTextComment}  value={textComment}/>
         <TouchableOpacity onPress={handleComment}>
           <Image source={icon.send} style={{ height: 50, width: 30 }} />
         </TouchableOpacity>
       </View>
       <FlatList
-        data={posts}
+        data={DATA}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => <RenderItem posts={posts} item={item} index={index} />}
+        renderItem={({ item, index }) => <RenderItem item={item} index={index} />}
       />
 
     </View>

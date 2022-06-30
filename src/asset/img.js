@@ -9,7 +9,8 @@ const backgroundGoog =require("./img/backgroundGoog.png")
 const backgroundHomeFacebook =require("./img/backgroundHomeFacebook.png")
 const groundRd =require("./img/groundRd.png")
 const backgroundCar =require("./img/backgroundCar.png")
-
+const login =require("./img/login.png")
+const GoogleIcon =require("./img/GoogleIcon.png")
 export default {
     imgLogin2,
     imgLogin,
@@ -20,5 +21,7 @@ export default {
     backgroundGoog,
     backgroundHomeFacebook,
     groundRd,
-    backgroundCar
+    backgroundCar,
+    login,
+    GoogleIcon,
 }

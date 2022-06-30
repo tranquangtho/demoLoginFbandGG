@@ -9,6 +9,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import AddFriend from '../root/Home/HomeFb/AddFriend';
 import Notification from '../root/Home/HomeFb/Notification';
 import Menu from '../root/Home/HomeFb/Menu';
+import Register from '../root/login/Register';
 // import Google from '../root/Home/Google';
 import {
   View,
@@ -17,6 +18,7 @@ import {
   Dimensions
 } from 'react-native';
 import { icon } from '../asset';
+import Profile from '../root/login/Profile';
 const HomeStack = createMaterialTopTabNavigator();
 const MainStack = createNativeStackNavigator()
 
@@ -96,8 +98,10 @@ export default function MyTabs() {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="Login" component={Login} />
+      <MainStack.Screen name="Register" component={Register} />
+      <MainStack.Screen name="Profile" component={Profile} />
       <MainStack.Screen name="HomeFb" component={HomeFb} />
-      <MainStack.Screen name="FaceBook" component={ModalFaceBook} />
+      <MainStack.Screen name="FaceBook" component={ModalFaceBook} screenOptions={{ headerShown: true }} />
       <MainStack.Screen name="Comment" component={Comment} />
     </MainStack.Navigator>
   );

@@ -25,8 +25,8 @@
     "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.27.2",
     "immer": "^9.0.15",
-    "react": "17.0.2",
-    "react-native": "0.68.2",
+    "react": "18.0.0",
+    "react-native": "0.69.1",
     "react-native-fbsdk-next": "^8.0.5",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-pager-view": "^5.4.24",
@@ -42,6 +42,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
+    "rn-modal-view": "^2.0.1",
     "save": "^2.5.0"
   },
   "devDependencies": {
