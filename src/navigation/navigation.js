@@ -15,7 +15,8 @@ import {
   View,
   Text,
   Image,
-  Dimensions
+  Dimensions,
+  StyleSheet
 } from 'react-native';
 import { icon } from '../asset';
 import Profile from '../root/login/Profile';
@@ -28,14 +29,14 @@ export default function MyTabs() {
 
   const HomeFb = () => {
     return (
-      <HomeStack.Navigator  screenOptions={{
-        headerShown:false,
+      <HomeStack.Navigator screenOptions={{
+        headerShown: false,
         tabBarShowLabel: false,
       }}>
-        <HomeStack.Screen name="Google"  component={Google} options={{
+        <HomeStack.Screen name="Google" component={Google} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', flexDirection: 'column', alignItems: 'center', borderRadius: 20, height:30, width:30}}>
+              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', flexDirection: 'column', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
@@ -50,7 +51,7 @@ export default function MyTabs() {
         <HomeStack.Screen name="AddFriend" component={AddFriend} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height:30, width:30 }}>
+              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
@@ -65,7 +66,7 @@ export default function MyTabs() {
         <HomeStack.Screen name="notification" component={Notification} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width:30 }}>
+              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
@@ -80,7 +81,7 @@ export default function MyTabs() {
         <HomeStack.Screen name="Menu" component={Menu} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height:30, width:30 }}>
+              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'

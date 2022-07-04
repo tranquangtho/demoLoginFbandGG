@@ -1,36 +1,90 @@
-import { View, Text,ImageBackground, Image, Touchable, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 
 export default function AddFriend() {
-  const dispatch=useDispatch()
-  const Friend= useSelector(state=>state.friend.addFriend)
+  const dispatch = useDispatch()
+  const Friend = useSelector(state => state.friend.addFriend)
   console.log(Friend);
-  const addFriend=()=>{
+  const addFriend = () => {
     console.log();
   }
   return (
-    <ScrollView style={{flex:1}}>
-      {Friend.map((a)=>{
-        return(<View style={{height:70,width:"90%",margin:5,borderTopWidth:0.6}}>
-         <View style={{margin:5,flexDirection:"row",}}>
-          <View style={{flexDirection:"row"}}>
-          <Image source={{uri:a.imageURL}} style={{height:60,width:60,borderRadius:5}}/>
-          <Text style={{color:"black",marginTop:20,marginLeft:10,fontSize:17}}>{a.name}</Text>
-          </View>
-          <View style={{marginLeft:40,justifyContent:"center",height:60,width:100}}>
-            <TouchableOpacity style={{borderWidth:0.8,alignItems:"center",margin:2,backgroundColor:"#4c93ff"}} onPress={addFriend}>
-              <Text style={{color:"white",fontSize:15}}>Chấp Nhận</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{borderWidth:0.8,alignItems:"center",margin:2,}}>
-              <Text style={{color:"#181819",fontSize:15}}>Xoá Yêu Cầu</Text>
-            </TouchableOpacity>
-          </View>
-         </View>
-        </View>)
+    <ScrollView style={styles.container}>
+      {Friend.map((a) => {
+        return (
+          <View style={styles.layoutBig}>
+            <View style={styles.layoutChild}>
+              <View style={styles.boxRight}>
+                <Image source={{ uri: a.imageURL }} style={styles.avatarFriend} />
+                <Text style={styles.nameFriend}>{a.name}</Text>
+              </View>
+              <View style={styles.BoxLeft}>
+                <TouchableOpacity style={styles.requireAccept} onPress={addFriend}>
+                  <Text style={styles.textAccept}>Chấp Nhận</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.requireRefuse}>
+                  <Text style={styles.textRefuse}>Xoá Yêu Cầu</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>)
       })}
     </ScrollView>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  layoutBig: {
+    height: 70,
+    width: "90%",
+    margin: 5,
+    borderTopWidth: 0.6
+  },
+  layoutChild: {
+    margin: 5,
+    flexDirection: "row",
+  },
+  boxRight: {
+    flexDirection: "row"
+  },
+  avatarFriend: {
+    height: 60,
+    width: 60,
+    borderRadius: 5
+  },
+  nameFriend: {
+    color: "black",
+    marginTop: 20,
+    marginLeft: 10,
+    fontSize: 17
+  },
+  BoxLeft: {
+    marginLeft: 40,
+    justifyContent: "center",
+    height: 60,
+    width: 100
+  },
+  requireAccept: {
+    borderWidth: 0.8,
+    alignItems: "center",
+    margin: 2, backgroundColor: "#4c93ff"
+  },
+  requireRefuse: {
+    borderWidth: 0.8,
+    alignItems: "center",
+    margin: 2,
+  },
+  textAccept:{
+    color: "white",
+     fontSize: 15
+  },
+  textRefuse:{
+    color: "#181819",
+     fontSize: 15
+  }
+})

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native'
+import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,10 +18,15 @@ export default function Menu() {
 
       }
   return (
-    <ImageBackground source={img.backgroundHomeFacebook} style={{flex:1}} >
+    <ImageBackground source={img.backgroundHomeFacebook} style={styles.imageBackground} >
       <TouchableOpacity onPress={onLogOut}>
       <Text>đăng xuất</Text>
       </TouchableOpacity>
     </ImageBackground>
   )
 }
+const styles=StyleSheet.create({
+  imageBackground:{
+    flex:1
+  }
+})

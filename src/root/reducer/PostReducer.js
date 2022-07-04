@@ -9,7 +9,7 @@ const postSlice = createSlice({
     initialState: defaultState,
     reducers: {
         changePost: (state, action) => {
-            // console.log("Action.payload : ",action.payload);
+            console.log("Action.payload : ",action.payload);
             return{
                 ...state,
                 posts:action.payload
