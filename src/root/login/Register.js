@@ -49,7 +49,7 @@ export default function Register({ navigation }) {
                         <Text style={styles.warring}>please input information</Text>
                     </View>
                 }
-                <TouchableOpacity onPress={() => navigation.goBack()} style={styles.icon}>
+                <TouchableOpacity onPress={() => navigation.navigate("Login")} style={styles.icon}>
                     <Icon name={"arrow-left"} size={30} color={"black"} />
                 </TouchableOpacity>
             </View>
