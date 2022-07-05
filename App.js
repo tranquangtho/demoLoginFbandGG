@@ -4,9 +4,9 @@ import MyTabs from './src/navigation/navigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
-import store,{persistor} from './src/root/redux/store';
+import store,{persistor} from './src/screen/redux/store';
 import persistStore from 'redux-persist/es/persistStore';
-import Google from './src/root/Home/Google';
+import Google from './src/screen/Home/Google';
 
 export default function App() {
     return(

@@ -1,15 +1,15 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FaceBook from '../root/Home/ModalFaceBook';
-import Google from '../root/Home/Google';
-import Login from '../root/login/Login';
+import FaceBook from '../screen/Home/ModalFaceBook';
+import Google from '../screen/Home/Google';
+import Login from '../screen/login/Login';
 import React from 'react';
-import ModalFaceBook from '../root/Home/ModalFaceBook';
-import Comment from '../root/Home/Comment';
+import ModalFaceBook from '../screen/Home/ModalFaceBook';
+import Comment from '../screen/Home/Comment';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import AddFriend from '../root/Home/HomeFb/AddFriend';
-import Notification from '../root/Home/HomeFb/Notification';
-import Menu from '../root/Home/HomeFb/Menu';
-import Register from '../root/login/Register';
+import AddFriend from '../screen/Home/HomeFb/AddFriend';
+import Notification from '../screen/Home/HomeFb/Notification';
+import Menu from '../screen/Home/HomeFb/Menu';
+import Register from '../screen/login/Register';
 // import Google from '../root/Home/Google';
 import {
   View,
@@ -19,7 +19,7 @@ import {
   StyleSheet
 } from 'react-native';
 import { icon } from '../asset';
-import Profile from '../root/login/Profile';
+import Profile from '../screen/login/Profile';
 const HomeStack = createMaterialTopTabNavigator();
 const MainStack = createNativeStackNavigator()
 
