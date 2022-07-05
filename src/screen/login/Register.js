@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { img } from '../../asset'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { registerUser } from '../reducer/RegisterReducer';
+import { registerUser } from '../../redux/reducer/RegisterReducer';
 export default function Register({ navigation }) {
     const dispatch = useDispatch()
     const [userNameRegister, setUserNameRegister] = useState()

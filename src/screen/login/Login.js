@@ -20,7 +20,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewUSer } from '../action/user';
 import Google from '../Home/Google';
-import { userLogin } from '../reducer/itemReducer'
+import { userLogin } from '../../redux/reducer/userReducer'
 import { current } from 'immer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -39,18 +39,18 @@ const Login = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const dataUser = useSelector(state => state.user.user)
-  const [userName,setUserName]=useState()
-  const [passWord,setPassWord]=useState()
-  const userNameLogin = value =>setUserName(value)
-  const passWordLogin = value =>setPassWord(value)
-  const dataRegister= useSelector(state=>state.register.user)
+  const [userName, setUserName] = useState()
+  const [passWord, setPassWord] = useState()
+  const userNameLogin = value => setUserName(value)
+  const passWordLogin = value => setPassWord(value)
+  const dataRegister = useSelector(state => state.register.user)
   console.log(dataUser);
-//Login User
-  const LoginUser=()=>{
-    if(userName == dataUser.userName && passWord == dataUser.passWord){
+  //Login User
+  const LoginUser = () => {
+    if (userName == dataUser.userName && passWord == dataUser.passWord) {
       navigation.navigate("HomeFb")
     }
-    else{
+    else {
       console.log("sai mật khẩu");
     }
   }
@@ -87,7 +87,7 @@ const Login = () => {
             if (currentProfile) {
               dispatch(userLogin(currentProfile))
               navigation.navigate("HomeFb", currentProfile)
-              console.log("Login success with permissions:",currentProfile);
+              console.log("Login success with permissions:", currentProfile);
             }
           }
         )
@@ -98,32 +98,32 @@ const Login = () => {
     )
   };
   return (
-    <ImageBackground source={img.login} style={{ justifyContent: "center", flex: 1 }}>
-      <View style={{ backgroundColor: "white", marginHorizontal: 40, borderRadius: 5 }}>
-        <View style={{ marginHorizontal: 20, marginTop: 20, marginBottom: 10 }}>
+    <ImageBackground source={img.login} style={styles.imageBackground}>
+      <View style={styles.boxF}>
+        <View style={styles.boxC}>
           <View style={styles.taiKhoan}>
-            <TextInput placeholder='UserName' style={{ marginLeft: 10,width:"100%" }} onChangeText={userNameLogin}  value={userName} maxLength={16}/>
+            <TextInput placeholder='UserName' style={styles.TextInputBoxC} onChangeText={userNameLogin} value={userName} maxLength={16} />
           </View>
           <View style={styles.matKhau}>
-            <TextInput placeholder='PassWord' style={{ marginLeft: 10,width:"100%" }} onChangeText={passWordLogin} value={passWord} maxLength={16} />
+            <TextInput placeholder='PassWord' style={styles.TextInputBoxC} onChangeText={passWordLogin} value={passWord} maxLength={16} />
           </View>
         </View>
-        <TouchableOpacity style={{ alignItems: "flex-end", marginRight: 20, marginBottom: 10 }} onPress={()=>navigation.navigate("Register")}>
-          <Text style={{ color: "#00e7e2", fontWeight: "bold" }}>Register</Text>
+        <TouchableOpacity style={styles.register} onPress={() => navigation.navigate("Register")}>
+          <Text style={styles.textRegister}>Register</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginApp} onPress={LoginUser}>
-          <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>LOGIN</Text>
+          <Text style={styles.textLogin}>LOGIN</Text>
         </TouchableOpacity>
-        <View style={{ borderWidth: 0.2, marginHorizontal: 20 }}></View>
-        <View style={{alignItems:"center",margin:5}}>
-          <Text style={{color:"#5d8c8b",fontSize:18}}>--- Sign in with --- </Text>
+        <View style={styles.viewCut}></View>
+        <View style={styles.SingIn}>
+          <Text style={styles.SingIn}>--- Sign in with --- </Text>
         </View>
-        <View style={{ flexDirection: "row",margin:10,justifyContent:"space-around" }}>
+        <View style={styles.boxSingIn}>
           <TouchableOpacity onPress={LoginFb} >
             <Icon name={"facebook"} size={30} color="blue" />
           </TouchableOpacity>
-          <TouchableOpacity style={{marginTop:2}} onPress={onGoogleButtonPress}>
-            <Image source={img.GoogleIcon} style={{ height: 28, width: 28 }} />
+          <TouchableOpacity style={{ marginTop: 2 }} onPress={onGoogleButtonPress}>
+            <Image source={img.GoogleIcon} style={styles.ImageGoogleIcon} />
           </TouchableOpacity>
 
         </View>
@@ -132,6 +132,58 @@ const Login = () => {
   );
 }
 const styles = StyleSheet.create({
+  imageBackground: {
+    justifyContent: "center",
+    flex: 1
+  },
+  boxF: {
+    backgroundColor: "white",
+    marginHorizontal: 40,
+    borderRadius: 5
+  },
+  boxC: {
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 10
+  },
+  TextInputBoxC: {
+    marginLeft: 10, width: "100%"
+  },
+  register: {
+    alignItems: "flex-end",
+    marginRight: 20,
+    marginBottom: 10
+  },
+  textRegister: {
+    color: "#00e7e2",
+    fontWeight: "bold"
+  },
+  textLogin: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold"
+  },
+  viewCut: {
+    borderWidth: 0.2,
+    marginHorizontal: 20
+  },
+  SingIn: {
+    alignItems: "center",
+    margin: 5
+  },
+  textSingIn: {
+    color: "#5d8c8b",
+    fontSize: 18
+  },
+  boxSingIn: {
+    flexDirection: "row",
+    margin: 10,
+    justifyContent: "space-around"
+  },
+  ImageGoogleIcon: {
+    height: 28,
+    width: 28
+  },
   loginApp: {
     alignItems: "center",
     backgroundColor: "#00e7e2",

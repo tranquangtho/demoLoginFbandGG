@@ -20,8 +20,8 @@ import ModalFaceBook from './ModalFaceBook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import Comment from './Comment';
-import { changePost, updatePost } from '../reducer/PostReducer';
-import { userLogout } from '../reducer/itemReducer';
+import { changePost, updatePost } from '../../redux/reducer/PostReducer';
+import { userLogout } from '../../redux/reducer/userReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import produce from 'immer'
 const Google = (props) => {

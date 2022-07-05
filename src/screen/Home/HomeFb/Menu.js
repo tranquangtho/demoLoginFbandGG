@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { userLogout } from '../../reducer/itemReducer';
+import { userLogout } from '../../../redux/reducer/userReducer';
 import { useNavigation } from '@react-navigation/native';
 import { img } from '../../../asset';
 
