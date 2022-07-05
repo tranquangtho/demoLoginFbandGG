@@ -36,60 +36,48 @@ export default function MyTabs() {
         <HomeStack.Screen name="Google" component={Google} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', flexDirection: 'column', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
+              style={[styles.View,{ backgroundColor: focused ? '#FFE8D1' : '#fff'}]}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
-                style={{
-                  width: 24, height: 24, alignItems: 'center', justifyContent: 'center',
-                  tintColor: focused ? '#E89E0D' : '#D4DCE4'
-                }} />
-              {focused && <Text style={{ color: focused ? '#E89E0D' : '#D4DCE4', fontSize: 12, fontFamily: 'Inter', margin: 5 }}></Text>}
+                style={[{ tintColor: focused ? '#E89E0D' : '#D4DCE4'},styles.image]} />
+              {focused && <Text style={[{ color: focused ? '#E89E0D' : '#D4DCE4' },styles.text]}></Text>}
             </View>
           )
         }} />
         <HomeStack.Screen name="AddFriend" component={AddFriend} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
+              style={[styles.View,{ backgroundColor: focused ? '#FFE8D1' : '#fff'}]}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
-                style={{
-                  width: 24, height: 24, alignItems: 'center', justifyContent: 'center',
-                  tintColor: focused ? '#E89E0D' : '#D4DCE4'
-                }} />
-              {focused && <Text style={{ color: focused ? '#E89E0D' : '#D4DCE4', fontSize: 12, fontFamily: 'Inter', margin: 5 }}></Text>}
+                style={[{ tintColor: focused ? '#E89E0D' : '#D4DCE4'},styles.image]} />
+              {focused && <Text style={[{ color: focused ? '#E89E0D' : '#D4DCE4' },styles.text]}></Text>}
             </View>
           )
         }} />
         <HomeStack.Screen name="notification" component={Notification} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
+              style={[styles.View,{ backgroundColor: focused ? '#FFE8D1' : '#fff'}]}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
-                style={{
-                  width: 24, height: 24, alignItems: 'center', justifyContent: 'center',
-                  tintColor: focused ? '#E89E0D' : '#D4DCE4'
-                }} />
-              {focused && <Text style={{ color: focused ? '#E89E0D' : '#D4DCE4', fontSize: 12, fontFamily: 'Inter', margin: 5 }}></Text>}
+                style={[{ tintColor: focused ? '#E89E0D' : '#D4DCE4'},styles.image]} />
+              {focused && <Text style={[{ color: focused ? '#E89E0D' : '#D4DCE4' },styles.text]}></Text>}
             </View>
           )
         }} />
         <HomeStack.Screen name="Menu" component={Menu} options={{
           tabBarIcon: ({ focused }) => (
             <View
-              style={{ backgroundColor: focused ? '#FFE8D1' : '#fff', alignItems: 'center', borderRadius: 20, height: 30, width: 30 }}>
+              style={[styles.View,{ backgroundColor: focused ? '#FFE8D1' : '#fff'}]}>
               <Image
                 source={icon.Home}
                 resizeMode='contain'
-                style={{
-                  width: 24, height: 24, alignItems: 'center', justifyContent: 'center',
-                  tintColor: focused ? '#E89E0D' : '#D4DCE4'
-                }} />
-              {focused && <Text style={{ color: focused ? '#E89E0D' : '#D4DCE4', fontSize: 12, fontFamily: 'Inter', margin: 5 }}></Text>}
+                style={[{ tintColor: focused ? '#E89E0D' : '#D4DCE4'},styles.image]} />
+              {focused && <Text style={[{ color: focused ? '#E89E0D' : '#D4DCE4' },styles.text]}></Text>}
             </View>
           )
         }} />
@@ -107,3 +95,23 @@ export default function MyTabs() {
     </MainStack.Navigator>
   );
 }
+const styles = StyleSheet.create({
+  View: {
+    flexDirection: 'column',
+     alignItems: 'center', 
+     borderRadius: 20, 
+     height: 30,
+      width: 30 
+  },
+  image: {
+    width: 24,
+     height: 24,
+      alignItems: 'center', 
+      justifyContent: 'center',
+  },
+  text: {
+    fontSize: 12,
+     fontFamily: 'Inter',
+      margin: 5
+  },
+})
