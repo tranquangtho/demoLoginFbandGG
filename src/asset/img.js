@@ -1,16 +1,16 @@
 
-const imgLogin =require("./img/background.png")
-const imageFacebook =require("./img/imageFacebook.png")
-const imageGoogle =require("./img/imageGoogle.png")
-const imgLogin2 =require("./img/background2.png")
-const user =require("./img/user.png")
-const lock =require("./img/padlock.png")
-const backgroundGoog =require("./img/backgroundGoog.png")
-const backgroundHomeFacebook =require("./img/backgroundHomeFacebook.png")
-const groundRd =require("./img/groundRd.png")
-const backgroundCar =require("./img/backgroundCar.png")
-const login =require("./img/login.png")
-const GoogleIcon =require("./img/GoogleIcon.png")
+const imgLogin =require("./img/background.jpg")
+const imageFacebook =require("./img/imageFacebook.jpg")
+const imageGoogle =require("./img/imageGoogle.jpg")
+const imgLogin2 =require("./img/background2.jpg")
+const user =require("./img/user.jpg")
+const lock =require("./img/padlock.jpg")
+const backgroundGoog =require("./img/backgroundGoog.jpg")
+const backgroundHomeFacebook =require("./img/backgroundHomeFacebook.jpg")
+const groundRd =require("./img/groundRd.jpg")
+const backgroundCar =require("./img/backgroundCar.jpg")
+const login =require("./img/login.jpg")
+const GoogleIcon =require("./img/GoogleIcon.jpg")
 export default {
     imgLogin2,
     imgLogin,
