@@ -12,7 +12,6 @@ export default function Menu() {
   const addUserName = useSelector(state => state.user.user)
     
     const onLogOut = () => {
-        AsyncStorage.clear()
         dispatch(userLogout(addUserName))
         navigation.navigate("Login")
 

@@ -158,11 +158,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 60
   },
-  textButton: {
-    fontSize: 18,
-    color: "white",
-    paddingLeft: 10
-  },
+
   boxTopButtonPostWhite: {
     backgroundColor: "#d5d5d5",
     height: 30,
@@ -170,9 +166,8 @@ const styles = StyleSheet.create({
   },
   textButton: {
     fontSize: 18,
-    color: "#474d4d",
+    color: "white",
     paddingLeft: 10
   },
-  textButton: {},
 });
 export default ModalFaceBook;
