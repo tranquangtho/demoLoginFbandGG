@@ -10,14 +10,11 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { img } from '../../asset';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import ModalView from 'rn-modal-view'
 
 const ModalFaceBook = props => {
   const { addUserName } = props

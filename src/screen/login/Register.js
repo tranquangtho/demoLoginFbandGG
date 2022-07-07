@@ -8,11 +8,9 @@ export default function Register({ navigation }) {
     const dispatch = useDispatch()
     const [userNameRegister, setUserNameRegister] = useState()
     const [passWordRegister, setPassWordRegister] = useState()
-    const [enterPassWordRegister, setEnterRegister] = useState()
     const registerUserName = value => setUserNameRegister(value)
     const registerPassWord = value => setPassWordRegister(value)
     const [listData,setListData]=useState()
-    const dataRegister= useSelector(state=>state.register.user)
     const register = () => {
       const  dataUser = {
             userName: userNameRegister,

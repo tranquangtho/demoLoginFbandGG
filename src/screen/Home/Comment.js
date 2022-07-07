@@ -1,11 +1,9 @@
 import { View, Text, Touchable, TouchableOpacity, Image, TextInput, FlatList, StyleSheet } from 'react-native'
 import React from 'react'
-import { img, icon } from '../../asset'
-import { useEffect, useState } from 'react'
+import {  icon } from '../../asset'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
-import { changePost, updateComment, deleteComment } from '../../redux/reducer/PostReducer'
-import Google from './Google'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default function Comment({ navigation }) {

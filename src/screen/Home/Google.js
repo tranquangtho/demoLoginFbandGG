@@ -1,29 +1,19 @@
 import {
   View,
   Text,
-  Button,
-  Alert,
   StyleSheet,
   Image,
   TouchableOpacity,
-  Modal,
-  Pressable,
   FlatList,
   ImageBackground
 } from 'react-native';
-import React, { useState, useEffect, memo } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
+import React, { useState } from 'react';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import Comment from './Comment';
-import { changePost, updatePost } from '../../redux/reducer/PostReducer';
-import { userLogout } from '../../redux/reducer/userReducer';
+import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import produce from 'immer'
 const Google = (props) => {
   const route = useRoute()
   console.log("route", route.params);

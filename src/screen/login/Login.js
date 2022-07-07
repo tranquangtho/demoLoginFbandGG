@@ -12,16 +12,11 @@ import {
   Image
 } from 'react-native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import auth from '@react-native-firebase/auth';
-import { LoginButton, AccessToken, Profile, Settings, LoginManager } from 'react-native-fbsdk-next';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Profile, Settings, LoginManager } from 'react-native-fbsdk-next';
 import { img } from "../../asset"
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addNewUSer } from '../action/user';
-import Google from '../Home/Google';
 import { userLogin } from '../../redux/reducer/userReducer'
-import { current } from 'immer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 GoogleSignin.configure({

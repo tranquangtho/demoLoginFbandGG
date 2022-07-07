@@ -1,8 +1,6 @@
 import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
-import { img } from '../../asset'
 import { useSelector } from 'react-redux'
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconMater from 'react-native-vector-icons/MaterialIcons';
 
 
