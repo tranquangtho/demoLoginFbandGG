@@ -10,14 +10,16 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, { useState} from 'react';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ModalFaceBook = props => {
   const { addUserName } = props
+  const route = useRoute()
+  console.log(route);
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
@@ -48,54 +50,52 @@ const ModalFaceBook = props => {
   return (
 
     <View style={styles.modal}>
-
-      <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false}>
-        <View>
-          <View style={styles.boxTopF}>
-            <View style={styles.boxTopC}>
-              <TouchableOpacity onPress={setModalVisible}>
-                <Icon name={"arrow-left"} size={23} color="black" />
-              </TouchableOpacity>
-              <Text style={styles.boxTopCreatePost}>Tạo bài viết</Text>
-            </View>
-            {text
-              ?
-              <TouchableOpacity onPress={handlePost} style={styles.boxTopButtonPostBlue} >
-                <Text style={styles.textButton} >Đăng</Text>
-              </TouchableOpacity>
-              :
-              <View style={styles.boxTopButtonPostWhite}>
-                <Text style={styles.textButton} >Đăng</Text>
+          <Modal animationType="slide" transparent={false} visible={modalVisible} statusBarTranslucent={false}>
+            <View>
+              <View style={styles.boxTopF}>
+                <View style={styles.boxTopC}>
+                  <TouchableOpacity onPress={setModalVisible}>
+                    <Icon name={"arrow-left"} size={23} color="black" />
+                  </TouchableOpacity>
+                  <Text style={styles.boxTopCreatePost}>Tạo bài viết</Text>
+                </View>
+                {text
+                  ?
+                  <TouchableOpacity onPress={handlePost} style={styles.boxTopButtonPostBlue} >
+                    <Text style={styles.textButton} >Đăng</Text>
+                  </TouchableOpacity>
+                  :
+                  <View style={styles.boxTopButtonPostWhite}>
+                    <Text style={styles.textButton} >Đăng</Text>
+                  </View>
+                }
               </View>
-            }
-          </View>
-          <View style={styles.viewCut}></View>
-          <ScrollView>
-            <View style={{ flexDirection: 'row', margin: 10, alignItems: "center" }}>
-              <Image source={{ uri: addUserName?.imageURL }} style={styles.avatar} />
-              <Text style={styles.name}>{addUserName?.name}</Text>
+              <View style={styles.viewCut}></View>
+              <ScrollView>
+                <View style={{ flexDirection: 'row', margin: 10, alignItems: "center" }}>
+                  <Image source={{ uri: addUserName?.imageURL }} style={styles.avatar} />
+                  <Text style={styles.name}>{addUserName?.name}</Text>
+                </View>
+                <Pressable style={{ backgroundColor: '#f9ffb1' }}>
+                  <TextInput
+                    maxLength={999}
+                    multiline
+                    numberOfLines={10}
+                    placeholder="bạn đang nghĩ gì?"
+                    onChangeText={onChangeText}
+                  />
+                </Pressable>
+              </ScrollView>
             </View>
-            <Pressable style={{ backgroundColor: '#f9ffb1' }}>
-              <TextInput
-                maxLength={999}
-                multiline
-                numberOfLines={10}
-                placeholder="bạn đang nghĩ gì?"
-                onChangeText={onChangeText}
-              />
+          </Modal>
+          <View style={styles.boxGoogle}>
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+              <Image source={{ uri: addUserName?.imageURL }} style={styles.avatarGoogle} />
+            </TouchableOpacity>
+            <Pressable onPress={() => setModalVisible(true)} style={styles.textInput} >
+              <Text style={{ marginLeft: 20 }}>bạn đang nghĩ gì</Text>
             </Pressable>
-          </ScrollView>
-        </View>
-      </Modal>
-      <View style={styles.boxGoogle}>
-        <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-          <Image source={{ uri: addUserName?.imageURL }} style={styles.avatarGoogle} />
-        </TouchableOpacity>
-        <Pressable onPress={() => setModalVisible(true)} style={styles.textInput} >
-          <Text style={{ marginLeft: 20 }}>bạn đang nghĩ gì</Text>
-        </Pressable>
-      </View>
-
+          </View>
     </View>
 
   );

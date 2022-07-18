@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 
 
 
-export default function AddFriend() {
+export default function addFriend() {
   const dispatch = useDispatch()
   const Friend = useSelector(state => state.friend.addFriend)
   console.log(Friend);
   const addFriend = () => {
-    console.log();
+    console.log("A");
   }
   return (
     <ScrollView style={styles.container}>

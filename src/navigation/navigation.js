@@ -6,7 +6,7 @@ import React from 'react';
 import ModalFaceBook from '../screen/Home/ModalFaceBook';
 import Comment from '../screen/Home/Comment';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import AddFriend from '../screen/Home/HomeFb/AddFriend';
+import friend from '../screen/Home/HomeFb/addFriend';
 import Notification from '../screen/Home/HomeFb/Notification';
 import Menu from '../screen/Home/HomeFb/Menu';
 import Register from '../screen/login/Register';
@@ -45,7 +45,7 @@ export default function MyTabs() {
             </View>
           )
         }} />
-        <HomeStack.Screen name="AddFriend" component={AddFriend} options={{
+        <HomeStack.Screen name="friend" component={friend} options={{
           tabBarIcon: ({ focused }) => (
             <View
               style={[styles.View,{ backgroundColor: focused ? '#FFE8D1' : '#fff'}]}>

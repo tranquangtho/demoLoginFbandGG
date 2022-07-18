@@ -3,27 +3,35 @@ import React, { useState } from 'react'
 import { img } from '../../asset'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { registerUser } from '../../redux/reducer/RegisterReducer';
+import { userLogin } from '../../redux/reducer/userReducer';
 export default function Register({ navigation }) {
     const dispatch = useDispatch()
+
     const [userNameRegister, setUserNameRegister] = useState()
     const [passWordRegister, setPassWordRegister] = useState()
     const registerUserName = value => setUserNameRegister(value)
     const registerPassWord = value => setPassWordRegister(value)
-    const [listData,setListData]=useState()
+
+    const [listData, setListData] = useState()
+
+    const registerUser = useSelector(state => state.user.user)
     const register = () => {
-      const  dataUser = {
+
+        const dataUser = {
+            id:Date.now(),
             userName: userNameRegister,
             passWord: passWordRegister,
-            imageURL:"https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg"
+            imageURL: "https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg",
         }
-        console.log("dataUser",dataUser);
+        const userList=[...registerUser,dataUser]
+        console.log("add",userList);
+
+        setListData(userList)
+
         setUserNameRegister("")
         setPassWordRegister("")
-        setListData(dataUser)
-        // const ListData=[...listData]
-        // console.log(listDataUser);
-        dispatch(registerUser(dataUser))
+        dispatch(userLogin(userList))
+
     }
     return (
         <ImageBackground source={img.login} style={{ flex: 1, justifyContent: "center" }}>
@@ -56,12 +64,12 @@ export default function Register({ navigation }) {
     )
 }
 const styles = StyleSheet.create({
-    warring:{
-        fontSize:20,
-        color:"#5d8c8b"
+    warring: {
+        fontSize: 20,
+        color: "#5d8c8b"
     },
     input: {
-        alignItems:"center"
+        alignItems: "center"
     },
     icon: {
         marginTop: 10,

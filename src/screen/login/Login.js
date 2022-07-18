@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {
-  SafeAreaView,
-  Button,
   View,
   TextInput,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Alert,
   ImageBackground,
   Image
 } from 'react-native';
@@ -38,16 +35,17 @@ const Login = () => {
   const [passWord, setPassWord] = useState()
   const userNameLogin = value => setUserName(value)
   const passWordLogin = value => setPassWord(value)
-  const dataRegister = useSelector(state => state.register.user)
-  console.log(dataUser);
+  // console.log(dataUser);
   //Login User
   const LoginUser = () => {
-    if (userName == dataUser.userName && passWord == dataUser.passWord) {
-      navigation.navigate("HomeFb")
-    }
-    else {
-      console.log("sai mật khẩu");
-    }
+    dataUser.find((e) => {
+      if (userName == e.userName && passWord == e.passWord) {
+        navigation.navigate("HomeFb",e)
+      }
+      else {
+        console.log("sai mật khẩu");
+      }
+    })
   }
   //Login Google
   const onGoogleButtonPress = async () => {

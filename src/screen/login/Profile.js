@@ -1,4 +1,4 @@
-import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -7,7 +7,7 @@ import { userLogout } from '../../redux/reducer/userReducer';
 
 export default function Profile({navigation}) {
   const avatar = useSelector(state => state.user.user)
-  const addUserName = useSelector(state => state.user.user)
+  // const addUserName = useSelector(state => state.user.user)
   const dispatch =useDispatch()
   const onLogOut = () => {
     navigation.navigate("Login")
@@ -17,7 +17,9 @@ export default function Profile({navigation}) {
   }
   return (
     <View>
-
+      <View>
+        <TextInput placeholder='Tìm Kiếm'/>
+      </View>
       <ImageBackground source={{ uri: "https://tse4.mm.bing.net/th?id=OIP.YeVkVtkCudflYHfWu5bC6wHaEo&pid=Api&P=0&w=280&h=175" }} style={styles.ImageBackground}>
         <View style={styles.boxIcon}>
           <TouchableOpacity onPress={comeBack}>
@@ -39,7 +41,6 @@ export default function Profile({navigation}) {
 }
 const styles = StyleSheet.create({
   logOut:{
-
     backgroundColor:"yellow",
     width:100,
     margin:10,

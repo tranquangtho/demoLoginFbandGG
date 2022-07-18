@@ -15,7 +15,7 @@ const FriendSlice = createSlice({
     name: 'register',
     initialState: defaultState,
     reducers: {
-        addFriend: (state, action) => {
+        friendLy: (state, action) => {
             console.log("action.payload :",action.payload);
             return {
                 ...state,
