@@ -7,11 +7,12 @@ import { userLogin } from '../../redux/reducer/userReducer';
 export default function Register({ navigation }) {
     const dispatch = useDispatch()
 
-    const [userNameRegister, setUserNameRegister] = useState()
-    const [passWordRegister, setPassWordRegister] = useState()
-    const registerUserName = value => setUserNameRegister(value)
-    const registerPassWord = value => setPassWordRegister(value)
-
+    const [email, setEmail] = useState()
+    const [pass, setPass] = useState()
+    const [name, setName] = useState()
+    const nameUser = value => setName(value)
+    const onchangeName = value => setEmail(value)
+    const onchangePass = value => setPass(value)
     const [listData, setListData] = useState()
 
     const registerUser = useSelector(state => state.user.user)
@@ -19,17 +20,18 @@ export default function Register({ navigation }) {
 
         const dataUser = {
             id:Date.now(),
-            userName: userNameRegister,
-            passWord: passWordRegister,
+            name:name,
+            userName: email,
+            passWord: pass,
             imageURL: "https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg",
         }
         const userList=[...registerUser,dataUser]
         console.log("add",userList);
 
         setListData(userList)
-
-        setUserNameRegister("")
-        setPassWordRegister("")
+        setName("")
+        setEmail("")
+        setPass("")
         dispatch(userLogin(userList))
 
     }
@@ -39,13 +41,16 @@ export default function Register({ navigation }) {
             <View style={styles.layout}>
                 <View style={styles.form}>
                     <View style={styles.username}>
-                        <TextInput placeholder='UserName' style={{ marginLeft: 5 }} onChangeText={registerUserName} value={userNameRegister} maxLength={16} />
+                        <TextInput placeholder='Name' style={{ marginLeft: 5 }} onChangeText={nameUser} value={name} maxLength={16} />
+                    </View>
+                    <View style={styles.username}>
+                        <TextInput placeholder='UserName' style={{ marginLeft: 5 }} onChangeText={onchangeName} value={email} maxLength={16} />
                     </View>
                     <View style={styles.passWord}>
-                        <TextInput placeholder='PassWord' style={{ marginLeft: 5 }} onChangeText={registerPassWord} value={passWordRegister} maxLength={16} />
+                        <TextInput placeholder='PassWord' style={{ marginLeft: 5 }} onChangeText={onchangePass} value={pass} maxLength={16} />
                     </View>
                 </View>
-                {userNameRegister && passWordRegister
+                {email && pass
                     ?
                     <TouchableOpacity style={styles.register} onPress={register}>
                         <Text style={{ fontSize: 20, color: "white" }}>Register</Text>

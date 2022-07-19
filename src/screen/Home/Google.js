@@ -15,8 +15,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 const Google = (props) => {
-  const route = useRoute()
-  console.log("route", route.params);
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
@@ -27,11 +25,11 @@ const Google = (props) => {
     const [isLike, setIsLike] = useState(item.isLike)
     // const originalPost = posts.slice();
     // console.log(originalPost);
+  // const userList = addUserName.find(e=>console.log(e))
 
     const deleteData = () => {
       const removePhotoId = item.id;
       const value = posts.filter(a => a.id !== removePhotoId)
-      console.log("Value     sss : ", value);
       const action = changePost(value);
       dispatch(action);
     }
