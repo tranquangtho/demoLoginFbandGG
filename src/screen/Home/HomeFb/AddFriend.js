@@ -2,27 +2,22 @@ import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, Scroll
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-
 export default function addFriend() {
   const dispatch = useDispatch()
-  const Friend = useSelector(state => state.friend.addFriend)
-  console.log(Friend);
-  const addFriend = () => {
-    console.log("A");
-  }
+  const friend = useSelector(state => state.friend.addFriend)
+
   return (
     <ScrollView style={styles.container}>
-      {Friend.map((a) => {
-        return (
+      {/* {friend.map((a) => { */}
+        {/* return ( */}
           <View style={styles.layoutBig}>
             <View style={styles.layoutChild}>
               <View style={styles.boxRight}>
-                <Image source={{ uri: a.imageURL }} style={styles.avatarFriend} />
-                <Text style={styles.nameFriend}>{a.name}</Text>
+                {/* <Image source={{ uri: a.imageURL }} style={styles.avatarFriend} /> */}
+                <Text style={styles.nameFriend}>aaa</Text>
               </View>
               <View style={styles.BoxLeft}>
-                <TouchableOpacity style={styles.requireAccept} onPress={addFriend}>
+                <TouchableOpacity style={styles.requireAccept} >
                   <Text style={styles.textAccept}>Chấp Nhận</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.requireRefuse}>
@@ -30,8 +25,9 @@ export default function addFriend() {
                 </TouchableOpacity>
               </View>
             </View>
-          </View>)
-      })}
+          </View>
+          {/* ) */}
+      {/* })} */}
     </ScrollView>
   )
 }

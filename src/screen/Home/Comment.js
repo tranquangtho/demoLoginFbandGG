@@ -15,25 +15,27 @@ export default function Comment({ navigation }) {
   const { posts } = useSelector(state => state.post)
   const addUserName = useSelector(state => state.user.user)
   const [comment, setComment] = useState([])
+  console.log("comment : ",comment);
+  const DATA = route.params
 
-  const DATA = route.params.comment
   // console.log("DATA :", DATA);
 
   // const dataRoute = [route.params]
 
   const handleComment = () => {
-    console.log(route.params);
     const newItems = {
       id: Date.now(),
       time: Date.now(),
       text: textComment
     }
-    const newList = [...DATA, newItems]
+    const newList = [...comment, newItems]
     navigation.setParams({
       comment: newList
     })
     setTextComment("")
-
+    setComment(newList)
+    console.log(comment);
+    console.log(DATA);
     // console.log(" dataNew : ", dataNew);
 
     // console.log("dataRoute in : ", dataRoute);
@@ -53,10 +55,10 @@ export default function Comment({ navigation }) {
       <View >
         <View style={styles.listCommentLayout}>
           <View style={styles.listCommentBoxRight}>
-            <Image source={{ uri: addUserName?.imageURL }} style={styles.listCommentAvatar} />
+            <Image source={{ uri: DATA?.imageURL }} style={styles.listCommentAvatar} />
           </View>
           <View style={styles.listCommentBoxLeft}>
-            <Text style={styles.listCommentName}>{addUserName?.name}</Text>
+            <Text style={styles.listCommentName}>{DATA?.name}</Text>
             <Text style={styles.listCommentText}>{item.text}</Text>
           </View>
         </View>
@@ -72,17 +74,16 @@ export default function Comment({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.boxTextInput}>
-        <TextInput style={styles.textInput} placeholder="Comment" onChangeText={setTextComment} value={textComment} />
+        <TextInput style={styles.textInput} placeholder="Comment" onChangeText={onChangeText} value={textComment} />
         <TouchableOpacity onPress={handleComment}>
           <Image source={icon.send} style={styles.iconSend} />
         </TouchableOpacity>
       </View>
       <FlatList
-        data={DATA}
+        data={comment}
         keyExtractor={item => item.id}
         renderItem={({ item, index }) => <RenderItem item={item} index={index} />}
       />
-
     </View>
   )
 }

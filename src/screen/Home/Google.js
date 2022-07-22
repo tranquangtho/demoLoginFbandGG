@@ -7,25 +7,63 @@ import {
   FlatList,
   ImageBackground
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { img, icon } from '../../asset';
 import ModalFaceBook from './ModalFaceBook';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Profile, Settings, LoginManager } from 'react-native-fbsdk-next';
+import { userLogin } from '../../redux/reducer/userReducer'
+import { currentLogin } from '../../redux/reducer/CurrentLogin';
+
 const Google = (props) => {
+  const route = useRoute()
   const navigation = useNavigation();
   const dispatch = useDispatch()
-  const addUserName = useSelector(state => state.user.user)
-  // console.log(" addUserName :",addUserName);
+  const dataUser = useSelector(state => state.user.user)
+  const [AnhTai, setAnhTai] = useState()
   const { posts } = useSelector(state => state.post)
-  const ItemPost = ({ item, index }) => {
+  const current =useSelector(state=>state.current)
+  // console.log(" current : ",current);
+  // console.log("Anh TAI : ",AnhTai);
+
+  useEffect(() => {
+
+    if (route.params && route.params.isLoginOther) {
+      setAnhTai(route.params.dataUser)
+      // dispatch(currentLogin(AnhTai))
+    } else {
+      Profile.getCurrentProfile().then(currentProfile => {
+        if (dataUser !== undefined) {
+          const userFinded = dataUser.find(e => {
+            return e.userID === currentProfile.userID
+          })
+          // AnhTai=userFinded
+          setAnhTai(userFinded)
+
+          if (!userFinded) {
+            const listUser = [...dataUser, currentProfile]
+            dispatch(userLogin(listUser))
+          }
+        }
+        else {
+          const listUser = [currentProfile]
+          dispatch(userLogin(listUser))
+        }
+      })
+    }
+
+
+  })
+
+  const ItemPost = ({ item, index, AnhTai }) => {
 
     const [isLike, setIsLike] = useState(item.isLike)
     // const originalPost = posts.slice();
     // console.log(originalPost);
-  // const userList = addUserName.find(e=>console.log(e))
+    // console.log(" userList 2 :", userList);
 
     const deleteData = () => {
       const removePhotoId = item.id;
@@ -67,10 +105,10 @@ const Google = (props) => {
         <View style={styles.info}>
           <View style={styles.avatar}>
             <View>
-              <Image source={{ uri: addUserName?.imageURL }} style={styles.imgAvatar} />
+              <Image source={{ uri: AnhTai?.imageURL }} style={styles.imgAvatar} />
             </View>
             <View style={styles.name}>
-              <Text style={styles.content}>{addUserName?.name}</Text>
+              <Text style={styles.content}>{AnhTai?.name}</Text>
             </View>
           </View>
           <TouchableOpacity onPress={deleteData} >
@@ -97,7 +135,7 @@ const Google = (props) => {
               <Text style={styles.textUnLike}>Bỏ Thích</Text>
             </TouchableOpacity>
           }
-          <TouchableOpacity style={styles.touchComment} onPress={() => navigation.navigate("Comment", item)}>
+          <TouchableOpacity style={styles.touchComment} onPress={(e) => navigation.navigate("Comment",AnhTai)}>
             <Icon name={"comment"} size={30} color="black" />
             <Text style={styles.comment}>Bình luận</Text>
           </TouchableOpacity>
@@ -112,11 +150,11 @@ const Google = (props) => {
 
   return (
     <ImageBackground source={img.groundRd} style={styles.imageBackground}>
-      <ModalFaceBook addUserName={addUserName} />
+      <ModalFaceBook addUserName={dataUser} AnhTai={AnhTai} />
       <FlatList
         data={posts}
         keyExtractor={item => item.id}
-        renderItem={({ item, index }) => <ItemPost item={item} index={index} />}
+        renderItem={({ item, index }) => <ItemPost item={item} index={index} AnhTai={AnhTai} />}
       />
     </ImageBackground>
   );

@@ -5,15 +5,17 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconE from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userLogout } from '../../redux/reducer/userReducer';
+import { useRoute } from '@react-navigation/native';
 
 export default function Profile({ navigation }) {
   const avatar = useSelector(state => state.user.user)
-  // const addUserName = useSelector(state => state.user.user)
-  // const userList = avatar.find(e => e)
-
+  const route=useRoute()
+  console.log("route : ",route.params);
+  const AnhTai =route.params
   const dispatch = useDispatch()
   const onLogOut = () => {
     navigation.navigate("Login")
+    dispatch(userLogout(AnhTai))
   }
   const comeBack = () => {
     navigation.navigate("Google")
@@ -32,8 +34,8 @@ export default function Profile({ navigation }) {
       <View style={styles.rowBlack}></View>
       <Image source={{ uri: "https://tse4.mm.bing.net/th?id=OIP.YeVkVtkCudflYHfWu5bC6wHaEo&pid=Api&P=0&w=280&h=175" }} style={styles.ImageBackground}/>
       <View style={styles.boxAvatar}>
-        <Image source={{ uri: avatar.imageURL }} style={styles.avatar} />
-        <Text style={styles.name}>{avatar.name}</Text>
+        <Image source={{ uri: AnhTai.imageURL }} style={styles.avatar} />
+        <Text style={styles.name}>{AnhTai.name}</Text>
       </View>
       <TouchableOpacity onPress={onLogOut} style={styles.logOut}>
         <Text>LogOut</Text>

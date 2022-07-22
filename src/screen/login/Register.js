@@ -16,18 +16,17 @@ export default function Register({ navigation }) {
     const [listData, setListData] = useState()
 
     const registerUser = useSelector(state => state.user.user)
+    console.log(" registerUser:", registerUser);
     const register = () => {
 
         const dataUser = {
-            id:Date.now(),
+            userID:Date.now(),
             name:name,
             userName: email,
             passWord: pass,
             imageURL: "https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg",
         }
         const userList=[...registerUser,dataUser]
-        console.log("add",userList);
-
         setListData(userList)
         setName("")
         setEmail("")

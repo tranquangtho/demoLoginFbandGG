@@ -1,25 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const defaultState = {
-    user: []
-    ,
+    current: [],
 }
 
-const userSlice = createSlice({
-    name: 'user',
+const currentSlice = createSlice({
+    name: 'current',
     initialState: defaultState,
     reducers: {
-        userLogin: (state, action) => {
+        currentLogin: (state, action) => {
             console.log("action.payload  123 : ", action.payload);
             return {
                 ...state,
-                user: action.payload,
+                current: action.payload,
             }
         },
-        userLogout: (state, action) => {
+        currentLogOut: (state, action) => {
             return {
                 ...state,
-                user: []
+                current:action.payload
             }
         },
 
@@ -27,8 +26,8 @@ const userSlice = createSlice({
 })
 
 export const {
-    userLogin, userLogout
-} = userSlice.actions
+    currentLogin, currentLogout
+} = currentSlice.actions
 
-export const userReducer = userSlice.reducer;
+export const currentReducer = currentSlice.reducer;
 

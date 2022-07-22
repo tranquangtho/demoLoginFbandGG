@@ -35,18 +35,19 @@ const Login = () => {
   const [passWord, setPassWord] = useState()
   const userNameLogin = value => setUserName(value)
   const passWordLogin = value => setPassWord(value)
-  // console.log(dataUser);
-  //Login User
+
   const LoginUser = () => {
-    dataUser.find((e) => {
-      if (userName == e.userName && passWord == e.passWord) {
-        navigation.navigate("HomeFb",e)
-      }
-      else {
-        console.log("sai mật khẩu");
-      }
-    })
+    const loginUser = dataUser.find(e => userName == e.userName && passWord == e.passWord)
+    if (loginUser) {
+      navigation.navigate("HomeFb", {screen: 'Google', params: {dataUser: loginUser, isLoginOther: true}})
+    }
+    else {
+      console.log("sai mật khẩu");
+    }
   }
+
+
+
   //Login Google
   const onGoogleButtonPress = async () => {
     // // Get the users ID token
@@ -70,20 +71,12 @@ const Login = () => {
   //Login Facebook
   const LoginFb = () => {
     LoginManager.logInWithPermissions().then((result) => {
-      console.log(result);
+      console.log('result: ', result);
       if (result.isCancelled) {
         console.log("Login cancelled");
       } else {
         console.log("Login success with permissions: ")
-        Profile.getCurrentProfile().then(
-          function (currentProfile) {
-            if (currentProfile) {
-              dispatch(userLogin(currentProfile))
-              navigation.navigate("HomeFb", currentProfile)
-              console.log("Login success with permissions:", currentProfile);
-            }
-          }
-        )
+        navigation.navigate("HomeFb")
       }
     }, function (error) {
       console.log(error);
@@ -98,7 +91,7 @@ const Login = () => {
             <TextInput placeholder='UserName' style={styles.TextInputBoxC} onChangeText={userNameLogin} value={userName} maxLength={16} />
           </View>
           <View style={styles.matKhau}>
-            <TextInput placeholder='PassWord' style={styles.TextInputBoxC} onChangeText={passWordLogin} value={passWord} maxLength={16} />
+            <TextInput placeholder='PassWord' style={styles.TextInputBoxC} onChangeText={passWordLogin} value={passWord} maxLength={16} secureTextEntry={true} />
           </View>
         </View>
         <TouchableOpacity style={styles.register} onPress={() => navigation.navigate("Register")}>
@@ -118,7 +111,6 @@ const Login = () => {
           <TouchableOpacity style={{ marginTop: 2 }} onPress={onGoogleButtonPress}>
             <Image source={img.GoogleIcon} style={styles.ImageGoogleIcon} />
           </TouchableOpacity>
-
         </View>
       </View>
     </ImageBackground>

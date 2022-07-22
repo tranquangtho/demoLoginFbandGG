@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { icon } from '../asset';
 import Profile from '../screen/login/Profile';
+import { useRoute } from '@react-navigation/native';
 const HomeStack = createMaterialTopTabNavigator();
 const MainStack = createNativeStackNavigator()
 
@@ -28,6 +29,10 @@ export default function MyTabs() {
   const { height, width } = Dimensions.get('window');
 
   const HomeFb = () => {
+    const route =useRoute()
+
+    console.log('qqqqq', route);
+
     return (
       <HomeStack.Navigator screenOptions={{
         headerShown: false,

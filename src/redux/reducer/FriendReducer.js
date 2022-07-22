@@ -8,25 +8,24 @@ const defaultState = {
         {id:Date.now(),name:"Cao Xuân Bách",imageURL:"https://phunugioi.com/wp-content/uploads/2020/10/anh-dai-dien-avt-anime-1-537x600.jpg"},
         {id:Date.now(),name:"Cao Xuân Bách",imageURL:"https://upanh123.com/wp-content/uploads/2021/01/anh-dai-dien-chat-cho-nu15-1.jpg"},
     ],
-    listFriend:{}
 }
 
 const FriendSlice = createSlice({
-    name: 'register',
+    name: 'addFriend',
     initialState: defaultState,
     reducers: {
         friendLy: (state, action) => {
             console.log("action.payload :",action.payload);
             return {
                 ...state,
-                user: action.payload
+                addFriend: action.payload
             }
         },
     }
 })
 
 export const {
-    registerUser
+    friendLyr
 } = FriendSlice.actions
 
 export const FriendReducer = FriendSlice.reducer;
