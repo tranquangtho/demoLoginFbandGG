@@ -90,7 +90,7 @@ export default function Comment({navigation}) {
         )}
       </View>
       <FlatList
-        data={DATA}
+        data={comment}
         keyExtractor={item => item.id}
         renderItem={({item, index}) => <RenderItem item={item} index={index} />}
       />

@@ -20,6 +20,7 @@ export default function Profile({ navigation }) {
   const onLogOut = async () => {
      dispatch(currentLogin(arr))
     navigation.navigate("Login")
+    dispatch(userLogout(AnhTai))
   }
 
 

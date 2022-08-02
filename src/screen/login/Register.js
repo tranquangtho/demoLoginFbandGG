@@ -17,6 +17,7 @@ export default function Register({ navigation }) {
     const [listData, setListData] = useState()
 
     const registerUser = useSelector(state => state.user.user)
+    console.log(" registerUser:", registerUser);
     const register = () => {
 
         const dataUser = {
