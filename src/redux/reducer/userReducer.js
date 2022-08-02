@@ -1,22 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const defaultState = {
-    user: [
-                // id: Date.now(),
-        // name: " Trần Quang Thọ",
-        // imageURL: "https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg",
-        // userName: "tho",
-        // passWord: "123456"
-    ]
+    user: []
     ,
 }
 
 const userSlice = createSlice({
-    name: 'post',
+    name: 'user',
     initialState: defaultState,
     reducers: {
         userLogin: (state, action) => {
-            console.log("action.payload : ",action.payload);
+            console.log("action.payload  userLogin : ", action.payload);
             return {
                 ...state,
                 user: action.payload,
@@ -25,7 +19,7 @@ const userSlice = createSlice({
         userLogout: (state, action) => {
             return {
                 ...state,
-                user: {}
+                user: []
             }
         },
 

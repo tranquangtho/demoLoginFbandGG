@@ -17,7 +17,7 @@ import { changePost } from '../../redux/reducer/PostReducer';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const ModalFaceBook = props => {
-  const { addUserName } = props
+    const route= useRoute()
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch()
@@ -28,9 +28,8 @@ const ModalFaceBook = props => {
   const [text, setText] = useState();
   const [data, setData] = useState([])
   const [count, setCount] = useState(0)
-  // const userList=addUserName.find(e=>{
-  //   return e
-  // })
+  const current= useSelector(state=>state.current.current)
+  // console.log("current :",current);
   const handlePost = () => {
 
     const newItem = {
@@ -72,8 +71,8 @@ const ModalFaceBook = props => {
                 <View style={styles.viewCut}></View>
                 <ScrollView>
                   <View style={{ flexDirection: 'row', margin: 10, alignItems: "center" }}>
-                    <Image source={{ uri: addUserName?.imageURL }} style={styles.avatar} />
-                    <Text style={styles.name}>{addUserName?.name}</Text>
+                     <Image source={{ uri: current?.imageURL }} style={styles.avatar} />
+                    <Text style={styles.name}>{current?.name}</Text> 
                   </View>
                   <Pressable style={{ backgroundColor: '#f9ffb1' }}>
                     <TextInput
@@ -88,8 +87,8 @@ const ModalFaceBook = props => {
               </View>
             </Modal>
             <View style={styles.boxGoogle}>
-              <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
-                <Image source={{ uri: addUserName?.imageURL }} style={styles.avatarGoogle} />
+              <TouchableOpacity onPress={() => navigation.navigate("Profile", current)}>
+                <Image source={{ uri: current?.imageURL }} style={styles.avatarGoogle} />
               </TouchableOpacity>
               <Pressable onPress={() => setModalVisible(true)} style={styles.textInput} >
                 <Text style={{ marginLeft: 20 }}>bạn đang nghĩ gì</Text>

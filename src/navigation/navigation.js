@@ -6,7 +6,7 @@ import React from 'react';
 import ModalFaceBook from '../screen/Home/ModalFaceBook';
 import Comment from '../screen/Home/Comment';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import friend from '../screen/Home/HomeFb/addFriend';
+import friend from '../screen/Home/HomeFb/AddFriend'
 import Notification from '../screen/Home/HomeFb/Notification';
 import Menu from '../screen/Home/HomeFb/Menu';
 import Register from '../screen/login/Register';
@@ -20,6 +20,7 @@ import {
 } from 'react-native';
 import { icon } from '../asset';
 import Profile from '../screen/login/Profile';
+import { useRoute } from '@react-navigation/native';
 const HomeStack = createMaterialTopTabNavigator();
 const MainStack = createNativeStackNavigator()
 
@@ -28,6 +29,10 @@ export default function MyTabs() {
   const { height, width } = Dimensions.get('window');
 
   const HomeFb = () => {
+    const route =useRoute()
+
+    // console.log('qqqqq', route);
+
     return (
       <HomeStack.Navigator screenOptions={{
         headerShown: false,

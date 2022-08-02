@@ -1,23 +1,36 @@
 import { View, Text, ImageBackground, Image, Touchable, TouchableOpacity, StyleSheet, TextInput } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconE from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userLogout } from '../../redux/reducer/userReducer';
+import { useRoute } from '@react-navigation/native';
+import { currentLogin } from '../../redux/reducer/CurrentLogin';
 
 export default function Profile({ navigation }) {
   const avatar = useSelector(state => state.user.user)
-  // const addUserName = useSelector(state => state.user.user)
-  // const userList = avatar.find(e => e)
-
+  const current= useSelector(state=>state.current.current)
+  const route= useRoute()
   const dispatch = useDispatch()
-  const onLogOut = () => {
+
+
+
+  const [arr,setArr]=useState({})
+  const onLogOut = async () => {
+     dispatch(currentLogin(arr))
     navigation.navigate("Login")
   }
+
+
+
   const comeBack = () => {
     navigation.navigate("Google")
   }
+
+
+
+
   return (
     <View style={styles.white}>
       <View style={styles.find}>
@@ -32,8 +45,8 @@ export default function Profile({ navigation }) {
       <View style={styles.rowBlack}></View>
       <Image source={{ uri: "https://tse4.mm.bing.net/th?id=OIP.YeVkVtkCudflYHfWu5bC6wHaEo&pid=Api&P=0&w=280&h=175" }} style={styles.ImageBackground}/>
       <View style={styles.boxAvatar}>
-        <Image source={{ uri: avatar.imageURL }} style={styles.avatar} />
-        <Text style={styles.name}>{avatar.name}</Text>
+        <Image source={{ uri: current.imageURL }} style={styles.avatar} />
+        <Text style={styles.name}>{current.name}</Text>
       </View>
       <TouchableOpacity onPress={onLogOut} style={styles.logOut}>
         <Text>LogOut</Text>

@@ -4,12 +4,13 @@ import { img } from '../../asset'
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { userLogin } from '../../redux/reducer/userReducer';
+import { currentLogin } from '../../redux/reducer/CurrentLogin';
 export default function Register({ navigation }) {
     const dispatch = useDispatch()
 
-    const [email, setEmail] = useState()
-    const [pass, setPass] = useState()
-    const [name, setName] = useState()
+    const [email, setEmail] = useState('')
+    const [pass, setPass] = useState('')
+    const [name, setName] = useState('')
     const nameUser = value => setName(value)
     const onchangeName = value => setEmail(value)
     const onchangePass = value => setPass(value)
@@ -19,21 +20,19 @@ export default function Register({ navigation }) {
     const register = () => {
 
         const dataUser = {
-            id:Date.now(),
+            key:"1",
+            userID:Date.now(),
             name:name,
             userName: email,
             passWord: pass,
             imageURL: "https://cdn1.vectorstock.com/i/1000x1000/31/95/user-sign-icon-person-symbol-human-avatar-vector-12693195.jpg",
         }
         const userList=[...registerUser,dataUser]
-        console.log("add",userList);
-
         setListData(userList)
         setName("")
         setEmail("")
         setPass("")
         dispatch(userLogin(userList))
-
     }
     return (
         <ImageBackground source={img.login} style={{ flex: 1, justifyContent: "center" }}>

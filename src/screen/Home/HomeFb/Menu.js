@@ -3,13 +3,14 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { userLogout } from '../../../redux/reducer/userReducer';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { img } from '../../../asset';
 
 export default function Menu() {
   const navigation = useNavigation();
   const dispatch = useDispatch()
   const addUserName = useSelector(state => state.user.user)
+  
     
     const onLogOut = () => {
         dispatch(userLogout(addUserName))
